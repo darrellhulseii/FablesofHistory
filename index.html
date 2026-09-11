@@ -461,8 +461,10 @@ function drawActor(x,cf,d,f){
     px(x,d===1?4:10,hy+3,2,5,skD);
   }
   if(cf.asc){
-    px(x,4,hy-1,8,1,'#cdefff'); px(x,3,hy,1,3,'#a6e0ff'); px(x,12,hy,1,3,'#a6e0ff');
-    if(d!==3){ px(x,5,hy,2,1,'#eafaff'); px(x,9,hy,2,1,'#eafaff'); }
+    var ac=cf.ascCol||'#cdefff', ac2=cf.ascCol2||'#a6e0ff';
+    px(x,4,hy-1,8,1,ac); px(x,3,hy,1,3,ac2); px(x,12,hy,1,3,ac2);
+    if(d!==3){ px(x,5,hy,2,1,ac); px(x,9,hy,2,1,ac); }
+    if(cf.asc===2){ px(x,2,hy-2,2,3,ac2); px(x,12,hy-2,2,3,ac2); px(x,6,hy-3,4,2,ac); }
   }
   if(hat){
     var hl=shade(hat,28), hd=shade(hat,-34);
@@ -1233,6 +1235,187 @@ ENEMYART['harvestlord']=function(x){
   px(x,28,-3,8,5,'#c46a2a');
 };
 
+/* ---- the harvest chain ---- */
+ENEMYART['herald']=function(x){
+  px(x,22,48,9,14,'#2a3038'); px(x,34,48,9,14,'#2a3038');
+  px(x,19,58,13,5,'#14181e'); px(x,33,58,13,5,'#14181e');
+  px(x,18,20,28,30,'#3f4a58'); px(x,18,20,11,30,'#4f5c6c');
+  px(x,18,20,28,5,'#d8d2c4'); px(x,18,33,28,5,'#c46a2a');
+  px(x,17,19,1,31,'#12161c'); px(x,46,19,1,31,'#12161c');
+  px(x,9,24,9,22,'#3f4a58'); px(x,46,24,9,20,'#3f4a58');
+  px(x,7,44,11,8,'#c8945e'); px(x,46,42,11,8,'#c8945e');
+  px(x,24,5,16,16,'#c8945e'); px(x,24,5,7,16,'#d6a470');
+  px(x,27,11,3,3,'#141014'); px(x,35,11,3,3,'#141014');
+  px(x,29,17,7,2,'#7a4a44');
+  px(x,20,0,24,6,'#2a2028');
+  for(var i=0;i<9;i++) px(x,20+i*3,-6+((i%3)*3),3,8,'#2a2028');
+  px(x,40,7,16,10,'#1c2028'); px(x,42,9,12,6,'#6affd0');
+  px(x,42,9,5,6,'#c8fff0'); px(x,54,10,5,3,'#c46a2a');
+};
+ENEMYART['herald2']=function(x){
+  ENEMYART['herald'](x);
+  px(x,18,20,28,5,'#ff8a40');
+  px(x,9,18,9,8,'#2a3038'); px(x,46,18,9,8,'#2a3038');
+  for(var i=0;i<7;i++){ x.strokeStyle='rgba(255,150,70,'+(0.4-i*0.05)+')'; x.lineWidth=2;
+    x.beginPath(); x.arc(32,30,26+i*5,0,6.283); x.stroke(); }
+  px(x,27,11,3,3,'#ff5a20'); px(x,35,11,3,3,'#ff5a20');
+};
+ENEMYART['brute']=function(x){
+  px(x,18,48,11,14,'#2c2a34'); px(x,36,48,11,14,'#2c2a34');
+  px(x,14,58,16,6,'#151319'); px(x,34,58,16,6,'#151319');
+  px(x,12,16,40,34,'#6a5a4a'); px(x,12,16,15,34,'#7d6c58');
+  px(x,12,16,40,6,'#d8d2c4'); px(x,12,32,40,6,'#8a2a2a');
+  px(x,11,15,1,36,'#141014'); px(x,52,15,1,36,'#141014');
+  px(x,1,20,11,26,'#6a5a4a'); px(x,52,20,11,26,'#6a5a4a');
+  px(x,0,42,13,10,'#c8945e'); px(x,51,42,13,10,'#c8945e');
+  px(x,24,2,17,15,'#c8945e'); px(x,24,2,7,15,'#d6a470');
+  px(x,22,5,21,5,'#2a2028');
+  px(x,27,10,4,3,'#141014'); px(x,35,10,4,3,'#141014');
+  px(x,28,15,9,3,'#6a3a34');
+  for(var i=0;i<5;i++) px(x,26+i*3,-2+((i%2)*2),4,8,'#2a2028');
+  px(x,20,20,24,3,'#a08a6a');
+};
+ENEMYART['precise']=function(x){
+  px(x,23,48,8,14,'#221f2c'); px(x,34,48,8,14,'#221f2c');
+  px(x,20,58,12,5,'#121018'); px(x,33,58,12,5,'#121018');
+  px(x,20,20,24,30,'#3a3550'); px(x,20,20,9,30,'#4a4564');
+  px(x,20,20,24,5,'#d8d2c4'); px(x,20,33,24,4,'#8a2a2a');
+  px(x,19,19,1,31,'#12101a'); px(x,44,19,1,31,'#12101a');
+  px(x,12,24,8,22,'#3a3550'); px(x,44,22,8,22,'#3a3550');
+  px(x,10,44,10,7,'#d0a080'); px(x,44,40,10,7,'#d0a080');
+  px(x,25,5,14,16,'#d0a080'); px(x,25,5,6,16,'#deb090');
+  px(x,25,3,14,5,'#1c1a26');
+  px(x,28,11,3,3,'#141014'); px(x,35,11,3,3,'#141014');
+  px(x,30,17,5,2,'#7a4a44');
+  px(x,24,-1,16,5,'#1c1a26'); px(x,22,1,4,9,'#1c1a26'); px(x,38,1,4,9,'#1c1a26');
+  px(x,44,6,14,9,'#1c2028'); px(x,46,8,10,5,'#ff6a6a');
+  for(var i=0;i<5;i++){ x.strokeStyle='rgba(255,110,110,'+(0.34-i*0.06)+')'; x.lineWidth=2;
+    x.beginPath(); x.arc(51,10,6+i*5,-1,1); x.stroke(); }
+};
+function pageant(x,body,trim,skin,crest){
+  px(x,23,48,8,14,'#232028'); px(x,34,48,8,14,'#232028');
+  px(x,20,58,12,5,'#121016'); px(x,33,58,12,5,'#121016');
+  px(x,19,20,26,30,body); px(x,19,20,10,30,shade(body,22));
+  px(x,19,20,26,5,'#e2ddd0'); px(x,19,33,26,5,trim);
+  px(x,18,19,1,31,'#12101a'); px(x,45,19,1,31,'#12101a');
+  px(x,10,24,9,22,body); px(x,45,22,9,22,body);
+  px(x,8,44,11,7,skin); px(x,45,40,11,7,skin);
+  px(x,24,5,16,16,skin); px(x,24,5,7,16,shade(skin,20));
+  px(x,27,11,3,3,'#141014'); px(x,35,11,3,3,'#141014');
+  px(x,29,17,7,2,shade(skin,-50));
+  px(x,42,7,14,9,'#1c2028'); px(x,44,9,10,5,'#6affd0');
+  return crest;
+}
+ENEMYART['pageantA']=function(x){
+  pageant(x,'#7a2a4a','#e0c040','#c8945e');
+  px(x,22,1,20,6,'#e0c040'); poly2(x,[24,2,32,-10,40,2],'#e0c040');
+  px(x,30,-8,4,4,'#fff0a0');
+};
+ENEMYART['pageantB']=function(x){
+  pageant(x,'#2a5a7a','#8dffae','#a8c8a0');
+  for(var i=0;i<3;i++) poly2(x,[24+i*7,4,28+i*7,-12,32+i*7,4],'#8dffae');
+  px(x,26,2,14,4,'#2a5a7a');
+};
+ENEMYART['pageantC']=function(x){
+  pageant(x,'#5a4a2a','#c46a2a','#9aa07a');
+  px(x,18,0,28,7,'#c46a2a'); px(x,18,0,28,3,'#e0904a');
+  px(x,20,-6,6,7,'#c46a2a'); px(x,38,-6,6,7,'#c46a2a');
+  px(x,14,18,36,3,'#c46a2a');
+};
+ENEMYART['cultivar']=function(x){
+  px(x,20,48,10,14,'#2a5a3a'); px(x,34,48,10,14,'#2a5a3a');
+  px(x,17,58,14,6,'#1a3a26'); px(x,33,58,14,6,'#1a3a26');
+  px(x,16,18,32,32,'#3f7a4a'); px(x,16,18,12,32,'#4f9059');
+  px(x,20,22,24,24,'#2a5a36');
+  for(var r=0;r<4;r++) for(var c2=0;c2<4;c2++)
+    px(x,21+c2*6,23+r*6,5,5,(r+c2)%2?'#356a42':'#48865a');
+  px(x,15,17,1,34,'#12200f');
+  px(x,6,22,10,24,'#3f7a4a'); px(x,48,22,10,24,'#3f7a4a');
+  px(x,4,44,12,8,'#4f9059'); px(x,48,44,12,8,'#4f9059');
+  px(x,24,3,16,16,'#4f9059'); px(x,24,3,7,16,'#5fa669');
+  px(x,22,6,20,5,'#1a3a26');
+  px(x,27,9,4,4,'#ffd040'); px(x,34,9,4,4,'#ffd040');
+  px(x,27,9,2,2,'#fff8c0'); px(x,34,9,2,2,'#fff8c0');
+  px(x,29,16,7,2,'#1a3a26');
+  poly2(x,[24,4,14,-10,30,0],'#2a5a36'); poly2(x,[40,4,50,-10,34,0],'#2a5a36');
+  px(x,2,14,8,4,'#2a5a36'); px(x,54,14,8,4,'#2a5a36');
+};
+ENEMYART['cultivar2']=function(x){
+  px(x,19,48,11,14,'#1f4630'); px(x,34,48,11,14,'#1f4630');
+  px(x,15,58,16,6,'#142c1e'); px(x,33,58,16,6,'#142c1e');
+  px(x,13,14,38,36,'#2f6a3e'); px(x,13,14,14,36,'#3e8450');
+  px(x,18,18,28,28,'#e8e4d2');
+  for(var r=0;r<4;r++) for(var c2=0;c2<4;c2++)
+    px(x,19+c2*7,19+r*7,6,6,(r+c2)%2?'#f2eee0':'#d2cdb8');
+  px(x,12,13,1,38,'#0f1c0c');
+  px(x,2,18,11,28,'#2f6a3e'); px(x,51,18,11,28,'#2f6a3e');
+  px(x,0,44,13,9,'#3e8450'); px(x,51,44,13,9,'#3e8450');
+  px(x,24,1,16,14,'#3e8450'); px(x,24,1,7,14,'#4e9a60');
+  px(x,26,5,4,5,'#ffe070'); px(x,35,5,4,5,'#ffe070');
+  px(x,28,12,8,2,'#142c1e');
+  poly2(x,[24,2,10,-14,28,-2],'#2f6a3e'); poly2(x,[40,2,54,-14,36,-2],'#2f6a3e');
+  for(var i=0;i<6;i++){ x.strokeStyle='rgba(140,255,170,'+(0.34-i*0.05)+')'; x.lineWidth=2;
+    x.beginPath(); x.arc(32,30,26+i*5,0,6.283); x.stroke(); }
+};
+ENEMYART['appetite']=function(x){
+  x.fillStyle='#e07ab0'; x.beginPath(); x.ellipse(32,40,26,20,0,0,6.283); x.fill();
+  x.fillStyle='#f094c4'; x.beginPath(); x.ellipse(28,35,21,15,0,0,6.283); x.fill();
+  x.fillStyle='#e07ab0'; x.beginPath(); x.ellipse(32,18,17,15,0,0,6.283); x.fill();
+  x.fillStyle='#f094c4'; x.beginPath(); x.ellipse(29,15,13,11,0,0,6.283); x.fill();
+  px(x,26,14,4,5,'#2a1420'); px(x,35,14,4,5,'#2a1420');
+  px(x,26,14,2,2,'#ffffff'); px(x,35,14,2,2,'#ffffff');
+  px(x,28,23,9,3,'#8a3a60');
+  poly2(x,[30,3,26,-14,40,-4],'#e07ab0');
+  px(x,4,34,12,8,'#e07ab0'); px(x,48,34,12,8,'#e07ab0');
+  px(x,18,54,12,8,'#d06aa0'); px(x,34,54,12,8,'#d06aa0');
+  seed(881);
+  for(var i=0;i<9;i++){ var bx=(8+rnd()*48)|0,by=(28+rnd()*22)|0;
+    x.fillStyle='#c85a94'; x.beginPath(); x.arc(bx,by,3+rnd()*3,0,6.283); x.fill(); }
+  px(x,20,30,8,3,'#f8b4d8'); px(x,40,44,7,3,'#f8b4d8');
+};
+ENEMYART['appetite2']=function(x){
+  px(x,26,42,12,20,'#d06aa0'); px(x,26,42,5,20,'#e884b8');
+  px(x,22,58,9,6,'#b04a80'); px(x,34,58,9,6,'#b04a80');
+  px(x,22,20,20,24,'#e07ab0'); px(x,22,20,8,24,'#f094c4');
+  px(x,14,22,8,18,'#e07ab0'); px(x,42,22,8,18,'#e07ab0');
+  px(x,11,38,10,7,'#f094c4'); px(x,43,38,10,7,'#f094c4');
+  px(x,25,4,14,16,'#e07ab0'); px(x,25,4,6,16,'#f094c4');
+  px(x,28,10,3,4,'#2a1420'); px(x,35,10,3,4,'#2a1420');
+  px(x,29,17,6,2,'#8a3a60');
+  poly2(x,[30,5,20,-16,38,-2],'#e07ab0');
+  for(var i=0;i<6;i++){ x.strokeStyle='rgba(255,150,210,'+(0.36-i*0.055)+')'; x.lineWidth=2;
+    x.beginPath(); x.arc(32,30,24+i*5,0,6.283); x.stroke(); }
+};
+ENEMYART['hlord2']=function(x){
+  for(var i=0;i<7;i++){ x.strokeStyle='rgba(255,130,60,'+(0.30-i*0.04)+')'; x.lineWidth=3;
+    x.beginPath(); x.arc(32,30,22+i*6,0,6.283); x.stroke(); }
+  px(x,14,44,36,20,'#5a3a52'); px(x,10,60,44,4,'#3a2434');
+  px(x,10,14,44,32,'#c8b0c8'); px(x,10,14,16,32,'#dcc8dc'); px(x,46,14,8,32,'#a894ac');
+  px(x,10,14,44,6,'#c46a2a'); px(x,10,28,44,5,'#c46a2a');
+  px(x,0,18,12,28,'#c8b0c8'); px(x,52,18,12,28,'#c8b0c8');
+  px(x,20,0,24,16,'#d8c4d8'); px(x,20,0,10,16,'#eadaea');
+  px(x,18,5,28,7,'#0f0a12');
+  px(x,23,6,8,5,'#ff4a2a'); px(x,34,6,8,5,'#ff4a2a');
+  px(x,23,6,4,2,'#ffc0a0'); px(x,34,6,4,2,'#ffc0a0');
+  poly2(x,[20,2,4,-14,24,-2],'#d8c4d8'); poly2(x,[44,2,60,-14,40,-2],'#d8c4d8');
+  px(x,26,14,12,3,'#8a2a2a');
+};
+ENEMYART['hlord3']=function(x){
+  for(var i=0;i<5;i++){ x.strokeStyle='rgba(200,220,255,'+(0.26-i*0.045)+')'; x.lineWidth=2;
+    x.beginPath(); x.arc(32,32,20+i*6,0,6.283); x.stroke(); }
+  px(x,26,46,12,16,'#e6eaf6'); px(x,22,60,10,4,'#c8cfe0'); px(x,33,60,10,4,'#c8cfe0');
+  px(x,22,20,20,28,'#f2f4fb'); px(x,22,20,8,28,'#ffffff'); px(x,38,20,4,28,'#d2d8e8');
+  px(x,22,30,20,4,'#9fb0cc');
+  px(x,14,22,8,22,'#eef0f8'); px(x,42,22,8,22,'#eef0f8');
+  px(x,11,40,10,7,'#e0e4f0'); px(x,43,40,10,7,'#e0e4f0');
+  px(x,25,6,14,15,'#f8f9fd'); px(x,25,6,6,15,'#ffffff');
+  px(x,23,10,18,5,'#0b0d14');
+  px(x,27,10,4,4,'#e04a6a'); px(x,34,10,4,4,'#e04a6a');
+  px(x,27,10,2,2,'#ffc0cc'); px(x,34,10,2,2,'#ffc0cc');
+  px(x,29,18,6,2,'#8a94aa');
+  px(x,24,4,16,3,'#c8cfe0');
+};
+
 var ESPR={}; (function(){ for(var k in ENEMYART) ESPR[k]=mk(64,64,ENEMYART[k]); })();
 
 /* ================= GAME DATA ================= */
@@ -1279,6 +1462,8 @@ var SKILLS={
  DRAGDOWN:{n:"Drag Down",mp:14,k:'dmg',p:2.1,fx:['chainwhip','#98a0b0','#ff6060'],d:"Hooks it off its feet."},
  /* --- the green world --- */
  ASCEND:{n:"Ascend",mp:18,k:'ascend',p:0,fx:['ascend','#8fd8ff','#ffffff'],d:"The hair goes pale blue and the air starts to move. Lasts the battle."},
+ RAGE:{n:"Green Rage",mp:22,k:'rage',p:0,fx:['rage','#7ce89a','#eaffd0'],d:"She stops holding it in. Grows, and hits far harder. Costs a lot to keep up."},
+ RAGEBLAST:{n:"Broken Light",mp:16,k:'aoe',p:2.5,fx:['ragebeam','#8dffae','#ffffff'],d:"Thrown with both arms and no aim at all."},
  BLAST:{n:"Blast",mp:7,k:'dmg',p:2.0,fx:['orb','#7fd0ff','#ffffff'],d:"A thrown handful of light."},
  BEAM:{n:"Beam",mp:20,k:'dmg',p:3.4,fx:['beam2','#9ce0ff','#ffffff'],d:"Braced with both hands. Goes through most things."},
  NOVA:{n:"Nova",mp:30,k:'aoe',p:2.2,fx:['spikeboom','#ffd070','#ff5a20'],d:"Drops it in the middle of them and lets go."},
@@ -1302,6 +1487,16 @@ var SKILLS={
  COLDPOND:{n:"Mill-Pond",mp:0,k:'aoe',p:1.4,fx:['wave','#5f9ad0','#cfe4ee'],d:""},
  CANDLESNUFF:{n:"Snuff the Candle",mp:0,k:'dmg',p:2.9,fx:['guillotine','#e8e2d4','#ffcf60'],d:""},
  LETDOWN:{n:"Let Down Thy Hair",mp:0,k:'debuff',p:0.45,st:'def',fx:['coins','#e0b040','#f0c860'],d:""},
+ SCAN:{n:"Read the Count",mp:0,k:'debuff',p:0.4,st:'def',fx:['grid','#ff7a5a','#ffe0c0'],d:""},
+ PODFALL:{n:"Pod-Fall",mp:0,k:'aoe',p:1.6,fx:['spikeboom','#ffb060','#ff5a20'],d:""},
+ CRUSH:{n:"Crush",mp:0,k:'dmg',p:2.5,fx:['impact','#e8e0c8','#ff8040'],d:""},
+ PRECISION:{n:"Precision",mp:0,k:'pierce',p:2.2,fx:['beam2','#ff8a8a','#ffffff'],d:""},
+ POSE:{n:"Take the Pose",mp:0,k:'buff',p:0.45,st:'atk',fx:['aura','#ffd070','#fff0c0'],d:""},
+ SWAP:{n:"Change Places",mp:0,k:'debuffall',p:0.3,st:'atk',fx:['panes','#c8a0e8','#ffffff'],d:""},
+ REGROW:{n:"Regrow",mp:0,k:'selfheal',p:420,fx:['bloom','#8dffae','#ffffff'],d:""},
+ ABSORB:{n:"Absorb",mp:0,k:'drain',p:1.8,fx:['void','#f0a0c8','#ffd8e8'],d:""},
+ CANDYWORK:{n:"Turn to Candy",mp:0,k:'debuffall',p:0.34,st:'def',fx:['mock','#ffb0d8','#ffffff'],d:""},
+ SUPERNOVA:{n:"Supernova",mp:0,k:'aoe',p:2.3,fx:['comet','#ffd070','#ff5a20'],d:""},
  CULL:{n:"Cull",mp:0,k:'aoe',p:1.7,fx:['beam2','#ff7a5a','#ffd0c0'],d:""},
  SIPHON:{n:"Siphon",mp:0,k:'drain',p:1.6,fx:['drain','#7fd0a0','#40806a'],d:""},
  STRIPMINE:{n:"Strip-Mine",mp:0,k:'aoe',p:1.9,fx:['spikeboom','#c8a060','#ff9a30'],d:""},
@@ -1318,7 +1513,7 @@ var HEROES={
  LIZA:{id:'LIZA',n:"Liza",short:"Liza",
    hp:104,mp:36,atk:11,def:10,mag:16,spd:12,
    ghp:13,gmp:7,gatk:1.8,gdef:1.8,gmag:3.1,gspd:1.7,
-   learn:{1:['MERCY'],4:['RESOLVE'],8:['VIGIL'],14:['REVIVE']},
+   learn:{1:['MERCY'],4:['RESOLVE'],8:['VIGIL'],12:['RAGE'],14:['REVIVE']},
    art:{skin:'#e0b48c',hair:'#6a3a20',coat:'#6a2a3a',cape:'#8a3a4a'},
    bio:"He insulted her once, in a room off the Haymarket. She came back anyway. That is the whole of her character."},
  I330:{id:'I330',n:"I-330",short:"I-330",
@@ -1372,7 +1567,7 @@ var HEROES={
  OSIP:{id:'OSIP',n:"Osip the Flintlock",short:"Osip",wfx:['muzzle','#fff0c0','#ff8a30'],
    hp:116,mp:28,atk:21,def:11,mag:13,spd:15,
    ghp:14,gmp:5,gatk:3.5,gdef:1.7,gmag:2.2,gspd:2.0,
-   learn:{1:['VOLLEY'],6:['POINTBLANK']},
+   learn:{1:['VOLLEY'],6:['POINTBLANK'],9:['ASCEND']},
    art:{skin:'#c89a6e',hair:'#2a2018',coat:'#5a4030',acc:'#c8b070',hat:'#3a2a1e'},
    bio:"Armoury clerk. He signed out the powder ledger for eleven years and one night signed out the powder."},
  GRISHA:{id:'GRISHA',n:"Grisha of the Chain",short:"Grisha",wfx:['chainwhip','#b8bcc8','#8a90a0'],
@@ -1415,6 +1610,8 @@ var ITEMS={
  BOON7:{n:"Holle's Feather",cost:0,k:'boon',st:'mp',p:20,d:"It fell out of the sky as snow. (+20 max MP)",bat:0},
  BOON8:{n:"Life-Candle",cost:0,k:'boon',st:'mag',p:8,d:"Still burning. Nobody will say whose it is. (+8 MAG)",bat:0},
  BOON9:{n:"Antenna Shard",cost:0,k:'boon',st:'spd',p:6,d:"It hums when you hold it. (+6 SPD)",bat:0},
+ BOON10:{n:"Grafted Spur",cost:0,k:'boon',st:'atk',p:8,d:"Eleven donors, one very good idea. (+8 ATK)",bat:0},
+ BOON11:{n:"Hollow Tooth",cost:0,k:'boon',st:'hp',p:80,d:"It gave back everything it took. (+80 max HP)",bat:0},
  ZFRUIT:{n:"Green-World Fruit",cost:260,k:'hpfull',p:0,d:"One is a day's food. Fully restores an ally.",bat:1},
  ZCORE:{n:"Reactor Core",cost:340,k:'mp',p:999,d:"Restores all MP to one ally.",bat:1},
  PASSAGE:{n:"Launch Authority",cost:0,k:'key',p:0,d:"D-503's own hand. The Integral will answer to it.",bat:0}
@@ -1477,8 +1674,40 @@ var MONS={
  T6:{n:"Iron Hans",art:'ironhans',hp:1620,atk:50,def:33,mag:22,spd:16,xp:2600,g:1300,sk:['WILDMAN','COLDPOND'],boss:1},
  T7:{n:"Frau Holle",art:'holle',hp:1760,atk:43,def:29,mag:49,spd:19,xp:3600,g:1700,sk:['SNOWBED','REPAIR','COLDPOND'],boss:1},
  T8:{n:"Godfather Death",art:'death',hp:2900,atk:56,def:36,mag:51,spd:25,xp:7000,g:2600,sk:['CANDLESNUFF','SENTENCE','RUSHWING','LOBOTOMY'],boss:1},
- Z1:{n:"The Harvest Lord",art:'harvestlord',hp:3900,atk:61,def:40,mag:57,spd:27,xp:9000,g:4000,
-   sk:['CULL','STRIPMINE','SIPHON','SENTENCE'],boss:1}
+ Z2:{n:"Vask the Herald",art:'herald',hp:2150,atk:49,def:27,mag:38,spd:25,xp:2400,g:900,
+   sk:['SCAN','PODFALL'],boss:1,
+   forms:[{at:0.45,n:"Vask, Unclasped",art:'herald2',atk:1.35,spd:1.2,heal:0.15,
+     sk:['PODFALL','PRECISION','SCAN'],c1:'#ff9a5a',
+     msg:"He unclasps the shoulder plate. The count was never the real number."}]},
+ Z3:{n:"Brann the Anvil",art:'brute',hp:2772,atk:56,def:40,mag:17,spd:14,xp:3200,g:1200,
+   sk:['CRUSH','STRIPMINE'],boss:1},
+ Z3B:{n:"Sella the Needle",art:'precise',hp:2010,atk:48,def:27,mag:47,spd:30,xp:2600,g:1100,
+   sk:['PRECISION','CULL','SCAN'],boss:1},
+ Z4A:{n:"Ordran of the Pageant",art:'pageantA',hp:1846,atk:50,def:32,mag:25,spd:26,xp:2000,g:800,
+   sk:['POSE','CRUSH'],boss:1},
+ Z4B:{n:"Ixil of the Pageant",art:'pageantB',hp:1633,atk:43,def:25,mag:45,spd:34,xp:2000,g:800,
+   sk:['SWAP','CULL'],boss:1},
+ Z4C:{n:"Molvo of the Pageant",art:'pageantC',hp:2343,atk:54,def:39,mag:20,spd:18,xp:2000,g:800,
+   sk:['CRUSH','POSE'],boss:1},
+ Z5:{n:"The Cultivar",art:'cultivar',hp:3484,atk:60,def:38,mag:53,spd:24,xp:6500,g:2600,
+   sk:['SIPHON','CULL','REGROW'],boss:1,
+   forms:[{at:0.55,n:"The Cultivar, Second Instar",art:'cultivar2',atk:1.3,mag:1.3,def:1.15,heal:0.2,
+     sk:['REGROW','SUPERNOVA','SIPHON'],c1:'#8dffae',
+     msg:"The shell splits down the back. There was a better one folded inside."}]},
+ Z6:{n:"The Appetite",art:'appetite',hp:3264,atk:55,def:30,mag:62,spd:28,xp:7200,g:2800,
+   sk:['ABSORB','CANDYWORK'],boss:1,
+   forms:[{at:0.6,n:"The Appetite, Thinned",art:'appetite2',atk:1.25,spd:1.35,mag:1.2,heal:0.25,
+     sk:['ABSORB','CANDYWORK','SUPERNOVA'],c1:'#ffb0d8',
+     msg:"It sheds most of its bulk and gets considerably worse."}]},
+ Z1:{n:"The Harvest Lord",art:'harvestlord',hp:2688,atk:53,def:36,mag:48,spd:24,xp:9000,g:4000,
+   sk:['CULL','STRIPMINE','SIPHON'],boss:1,
+   forms:[
+    {at:0.62,n:"The Harvest Lord, Unbound",art:'hlord2',atk:1.3,def:1.2,mag:1.25,spd:1.1,heal:0.3,max:1.15,
+      sk:['STRIPMINE','CULL','SENTENCE','CRUSH'],c1:'#ff8a40',
+      msg:"The white plate comes off in pieces. Underneath is the thing the plate was for."},
+    {at:0.3,n:"The Harvest Lord, Final Accounting",art:'hlord3',atk:1.35,def:1.15,mag:1.4,spd:1.3,heal:0.35,max:1.1,
+      sk:['SUPERNOVA','PRECISION','SENTENCE','SIPHON'],c1:'#e0e8ff',
+      msg:"He folds down into something small, smooth and very quiet. This is the one that does the work."}]}
 };
 
 /* ================= MAP LAYOUTS ================= */
@@ -1620,6 +1849,82 @@ LAY.tale=[
  'w'+rep('W',16)+'w',
  'w'+rep('W',7)+'D'+rep('W',8)+'w',
  rep('w',18)];
+/* --- arena stages, one per villain --- */
+LAY.crater=[
+ rep('U',18),
+ 'U'+rep('o',16)+'U',
+ 'Uo'+rep('g',14)+'oU',
+ 'U'+rep('g',16)+'U',
+ 'U'+rep('g',6)+'xx'+rep('g',8)+'U',
+ 'U'+rep('g',16)+'U',
+ 'Uo'+rep('g',14)+'oU',
+ 'U'+rep('g',16)+'U',
+ 'U'+rep('g',5)+'x'+rep('g',4)+'x'+rep('g',5)+'U',
+ 'U'+rep('g',16)+'U',
+ 'Uo'+rep('g',14)+'oU',
+ 'U'+rep('g',16)+'U',
+ 'U'+rep('g',7)+'D'+rep('g',8)+'U',
+ rep('U',18)];
+LAY.ruins=[
+ rep('b',18),
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('g',3)+rep('x',4)+rep('g',5)+rep('x',2)+rep('g',2)+'b',
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('x',2)+rep('g',6)+'bb'+rep('g',4)+rep('x',2)+'b',
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('g',5)+'x'+rep('g',4)+'x'+rep('g',5)+'b',
+ 'b'+rep('g',16)+'b',
+ 'b'+'bb'+rep('g',12)+'xx'+'b',
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('g',4)+rep('x',3)+rep('g',6)+rep('x',2)+'g'+'b',
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('g',7)+'D'+rep('g',8)+'b',
+ rep('b',18)];
+LAY.apron=[
+ rep('M',18),
+ 'M'+rep('S',16)+'M',
+ 'M'+rep('S',16)+'M',
+ 'MS'+rep('R',14)+'SM',
+ 'M'+rep('S',16)+'M',
+ 'M'+rep('S',5)+'MM'+rep('S',2)+'MM'+rep('S',5)+'M',
+ 'M'+rep('S',16)+'M',
+ 'MS'+rep('R',14)+'SM',
+ 'M'+rep('S',16)+'M',
+ 'M'+rep('S',5)+'MM'+rep('S',2)+'MM'+rep('S',5)+'M',
+ 'M'+rep('S',16)+'M',
+ 'MS'+rep('R',14)+'SM',
+ 'M'+rep('S',7)+'D'+rep('S',8)+'M',
+ rep('M',18)];
+LAY.ring=[
+ rep('b',18),
+ 'b'+rep('g',16)+'b',
+ 'bgZ'+rep('g',12)+'Zgb',
+ 'b'+rep('g',2)+rep('S',12)+rep('g',2)+'b',
+ 'b'+rep('g',2)+'S'+rep('C',10)+'S'+rep('g',2)+'b',
+ 'b'+rep('g',2)+'S'+rep('C',10)+'S'+rep('g',2)+'b',
+ 'b'+rep('g',2)+'S'+rep('C',10)+'S'+rep('g',2)+'b',
+ 'b'+rep('g',2)+'S'+rep('C',10)+'S'+rep('g',2)+'b',
+ 'b'+rep('g',2)+'S'+rep('C',10)+'S'+rep('g',2)+'b',
+ 'b'+rep('g',2)+rep('S',12)+rep('g',2)+'b',
+ 'bgZ'+rep('g',12)+'Zgb',
+ 'b'+rep('g',16)+'b',
+ 'b'+rep('g',7)+'D'+rep('g',8)+'b',
+ rep('b',18)];
+LAY.waste=[
+ rep('V',18),
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',4)+'o'+rep('_',11)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',11)+'o'+rep('_',4)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',16)+'V',
+ 'V'+rep('_',7)+'D'+rep('_',8)+'V',
+ rep('V',18)];
 LAY.house=[
  rep('w',12),
  'wq'+rep('W',8)+'ew',
@@ -1745,8 +2050,10 @@ function buildOverworld(){
 }
 
 /* ================= THE GREEN WORLD ================= */
-var ZW=44,ZH=34;
-var Z_SITES=[[10,22,'ZVIL'],[31,9,'ZTEMPLE'],[33,25,'ZSPRING']];
+var ZW=56,ZH=42;
+var Z_SITES=[[10,26,'ZVIL'],[40,10,'ZTEMPLE'],[43,31,'ZSPRING'],
+             [20,14,'ARENA1'],[32,21,'ARENA2'],[47,20,'ARENA3'],
+             [25,33,'ARENA4'],[14,7,'ARENA5']];
 function buildZelyon(){
   var g=[],y,x,i;
   for(y=0;y<ZH;y++){ g[y]=[]; for(x=0;x<ZW;x++) g[y][x]='z'; }
@@ -1761,7 +2068,7 @@ function buildZelyon(){
   /* green seas and pools */
   for(y=4;y<ZH-4;y++){ var rx=6+((Math.sin(y*0.4)*3)|0);
     for(x=rx;x<rx+2;x++) if(x>2&&x<ZW-3) g[y][x]='u'; }
-  var lx=24,ly=20;
+  var lx=30,ly=26;
   for(y=ly-4;y<ly+5;y++) for(x=lx-6;x<lx+7;x++){
     var d2=(x-lx)*(x-lx)/2.2+(y-ly)*(y-ly);
     if(d2<18&&y>2&&y<ZH-3&&x>2&&x<ZW-3) g[y][x]='u'; }
@@ -1788,7 +2095,7 @@ function buildZelyon(){
   var HOME=[Z_SITES[0][0]+1,Z_SITES[0][1]+3];
   for(i=1;i<Z_SITES.length;i++) road(Z_SITES[i][0]+1,Z_SITES[i][1]+3,HOME[0],HOME[1]);
   /* the landing site, bottom-left, where the Integral sets down */
-  for(y=ZH-8;y<ZH-3;y++) for(x=5;x<13;x++) g[y][x]='S';
+  for(y=ZH-8;y<ZH-3;y++) for(x=5;x<14;x++) g[y][x]='S';
   g[ZH-4][8]='D'; g[ZH-4][9]='D';
   road(8,ZH-5,HOME[0],HOME[1]);
   function reach(sx,sy){
@@ -2168,6 +2475,44 @@ mkmap({id:'ZTEMPLE',name:"The Harvest Platform",rows:remap(LAY.min,{'S':'g','C':
      "You have brought a green one with you. How sentimental. Let us see what the two of you are worth by weight."]}],
  enc:{rate:0.062,tab:[['ZTROOP',4],['ZDRONE',3],['ZELITE',3],['ZSCOUT',2],['AUTOM',2]]}});
 
+
+
+/* ================= THE ARENAS ================= */
+function arena(id,name,rows,dark,boss,who,art,lines){
+  return mkmap({id:id,name:name,rows:rows,dark:dark,entry:[8,11],
+    warps:[{x:8,y:12,to:'ZELYON',tx:0,ty:0},{x:9,y:12,to:'ZELYON',tx:0,ty:0}],
+    npcs:[{x:8,y:3,art:art,dir:0,name:who,boss:boss,flag:'zb'+id.slice(-1),tk:lines}]});
+}
+arena('ARENA1',"The Impact Crater",LAY.crater,0.14,'Z2',"Vask the Herald",'BOSS',
+ ["The pod came down two days before the fleet did. That is the whole job: land early, read the numbers, radio them up.",
+  "Population, yield, resistance. Three figures. I have never once had to send a fourth.",
+  "You are not on my sheet. A clerk, a woman off a haymarket, and one of the local greens.",
+  "Let me take the reading off you directly, then. It is faster, and it does not require your cooperation."]);
+arena('ARENA2',"The Flattened Ward",LAY.ruins,0.2,['Z3','Z3B'],"Brann and Sella",'BOSS',
+ ["BRANN: There was a settlement here on Tuesday. I do not remember which one. They all take about the same time.",
+  "SELLA: Four minutes, if you go from the outside in. Brann goes from the middle out, which is slower and which he enjoys.",
+  "BRANN: It is not slower.",
+  "SELLA: It is measurably slower. I have the figures. - Now then. Two of you have real numbers and two of you are decoration.",
+  "BRANN: I do not care which is which."]);
+arena('ARENA3',"The Landing Apron",LAY.apron,0.18,['Z4A','Z4B','Z4C'],"The Pageant",'BOSS',
+ ["ORDRAN: Hold. Hold. You have walked onto the apron during the entrance.",
+  "IXIL: You will want to see the entrance. We rehearse it. There is a reason the Lord keeps us and it is not entirely the fighting.",
+  "MOLVO: It is mostly the fighting.",
+  "ORDRAN: It is the presentation AND the fighting, Molvo, that is the point of a pageant.",
+  "IXIL: Positions. - Right. Now you may be frightened."]);
+arena('ARENA4',"The Tournament Ring",LAY.ring,0.16,'Z5',"The Cultivar",'BOSS',
+ ["I built this ring myself. Flat stone, four pillars, no cover. Nothing here favours anybody.",
+  "That is the courtesy. I announced the date nine days ago and I have not moved it, and I will fight whoever walks up the steps.",
+  "I am an assembled thing. Eleven donors, a great deal of patience, and one very good idea about what a body could be if nobody was sentimental.",
+  "Your Benefactor sorted people into rows. I improved on that. I took the best row and made one person out of it.",
+  "Come up. Take your time. There is no hurry at all and that is the most frightening thing about me."]);
+arena('ARENA5',"The Blank Waste",LAY.waste,0.05,'Z6',"The Appetite",'BOSS',
+ ["There was terrain here. I have eaten it.",
+  "Not the people. The ground. The people I did separately, and they are all still here, in a sense that will not comfort you.",
+  "I do not hate anybody. That is what everyone gets wrong. I am simply always exactly as hungry as I was at the start.",
+  "You smell like a cellar and old paper and somebody who has been walking for a very long time.",
+  "Stand still. It is nicer if you stand still."]);
+
 /* ================= LINK THE TWO WORLD MAPS ================= */
 (function(){
   function link(world,sites,cityLike){
@@ -2189,7 +2534,7 @@ mkmap({id:'ZTEMPLE',name:"The Harvest Platform",rows:remap(LAY.min,{'S':'g','C':
   link('ZELYON',ZDATA.sites,0);
   /* the landing pad, bottom-left of the green world */
   MAPS.ZELYON.warps.push({x:8,y:ZH-4,to:'INTEGRAL',tx:8,ty:11},{x:9,y:ZH-4,to:'INTEGRAL',tx:9,ty:11});
-  MAPS.INTEGRAL.warps.push({x:8,y:12,to:'ZELYON',tx:8,ty:ZH-3,need:'PASSAGE',
+  MAPS.INTEGRAL.warps.push({x:8,y:12,to:'ZELYON',tx:8,ty:ZH-5,need:'PASSAGE',
     deny:["The gantry is locked out. Without D-503's own authority the Integral will not answer."]});
 })();
 
@@ -2210,9 +2555,12 @@ var NPCSPR={};
   var k;
   for(k in HEROES){
     NPCSPR[k]=actorSprite(HEROES[k].art);
-    var a={}; for(var q in HEROES[k].art) a[q]=HEROES[k].art[q];
-    a.hair='#9fe4ff'; a.asc=1;                     /* the ascended form */
+    var a={},q; for(q in HEROES[k].art) a[q]=HEROES[k].art[q];
+    a.hair='#9fe4ff'; a.asc=1;                     /* ascended */
     NPCSPR[k+'#A']=actorSprite(a);
+    var b={}; for(q in HEROES[k].art) b[q]=HEROES[k].art[q];
+    b.hair='#8dffae'; b.asc=2; b.ascCol='#d8ffe0'; b.ascCol2='#6ce89a';  /* the green rage */
+    NPCSPR[k+'#G']=actorSprite(b);
   }
   for(k in CIVART) NPCSPR[k]=actorSprite(CIVART[k]);
   var bk=mk(16,24,function(x){
@@ -2613,7 +2961,7 @@ function interact(){
   if(n){
     if(n.boss && !G.flags[n.flag]){
       if(n.need && !hasItem(n.need)){ say(TALEGATE,null,n.name,n.art); return; }
-      say(n.tk,function(){ startBattle([n.boss],n); },n.name,n.art); return; }
+      say(n.tk,function(){ startBattle([].concat(n.boss),n); },n.name,n.art); return; }
     if(n.boss && G.flags[n.flag]){ say(["The room is empty. Somebody has taken down the portrait."]); return; }
     say(n.tk,function(){ if(n.ev) runEvent(n.ev,n); },n.name,n.art); return; }
   var t=tileAt(m,f.x,f.y);
@@ -2709,7 +3057,7 @@ function runEvent(ev,npc){
       "Somewhere past the third planet the windows stop showing anything you have a word for.",
       "Then: green. A whole world of it, the colour of the grass I-330 had in her teeth, and a sun the wrong shade behind it.",
       "The gantry sets you down in a field of it. Nobody shoots at you. That is new."],
-      function(){ fadeTo(function(){ G.map='ZELYON'; G.px=8; G.py=ZH-3; G.ox=G.oy=0; G.moving=0; G.encCool=14; }); }); }
+      function(){ fadeTo(function(){ G.map='ZELYON'; G.px=8; G.py=ZH-5; G.ox=G.oy=0; G.moving=0; G.encCool=14; }); }); }
   else if(p[0]==='teachAscend'){
     npc.tk=["Hold it as long as you mean it, and no longer."];
     var m=teach('ASCEND');
@@ -2756,6 +3104,21 @@ var BOSSTEXT={
    "Down in the pit works somebody opens a door that has been shut since the first year, and the noise that comes out of it is not machinery.",
    "Nael sits down in the green and says the sentence they had been practising. It is very short.",
    "Elder Vosk gives you something from the ninth well. Obtained: Antenna Shard."]},
+ zb1:{sc:'greenworld',t:["The herald's transmitter goes over in the dust, still counting.",
+   "Somewhere above the third planet a fleet receives an incomplete sheet and files it as an error.",
+   "It buys the wells about nine days. Nael says nine days is more than they have had since the first year."]},
+ zb2:{sc:'greenworld',t:["Brann sits down in the rubble of the ward he flattened and does not get up.",
+   "Sella checks her figures one last time, finds them correct, and appears genuinely relieved about it.",
+   "The two of them argued the entire way down. It was the only thing either of them was good at besides the other thing."]},
+ zb3:{sc:'greenworld',t:["The Pageant finish their entrance on the way out, because they had rehearsed it and it seemed a waste.",
+   "The apron is empty. Six transports that were due to load at dawn will now not load at all.",
+   "Nael says nothing for a while, and then says the names of the three settlements those transports were for."]},
+ zb4:{sc:'greenworld',t:["The Cultivar keeps its word all the way down. No cover, no trick, nothing held back and nothing unfair.",
+   "Eleven donors, it said. At the end it names them, one at a time, and then stops.",
+   "Something falls out of the split shell, still warm. Obtained: Grafted Spur."]},
+ zb5:{sc:'greenworld',t:["The waste stops being blank. Ground comes back first, in patches, and then the shapes of things that were on it.",
+   "People walk out of it in ones and twos, confused and entirely intact, which is not how anyone expected that to go.",
+   "One of them presses something into your hand without explaining it. Obtained: Hollow Tooth."]},
  t8:{sc:'cottage',t:["Death does not fall, exactly. He concedes the point and sets the candle down still lit.",
    "The shelf goes back further than the cavern should allow. Tall ones, stumps, none of them sorted.",
    "One is put into your hand, burning. Obtained: Life-Candle."]}
@@ -2765,10 +3128,10 @@ function afterBoss(npc){
   if(npc.flag==='lib3'){ addItem('KEY4'); addItem('PASSAGE'); }
   var TALEREWARD={t1:['BOON1','CRUMB'],t2:['BOON2','FIDDLE'],t3:['BOON3','NAMING'],t4:['BOON4','MIRROR'],
     t5:['BOON5','STONEBELLY'],t6:['BOON6','WILDMAN'],t7:['BOON7','FEATHERBED'],t8:['BOON8','CANDLE'],
-    z1:['BOON9','WOLFBOLT']};
+    z1:['BOON9','WOLFBOLT'], zb4:['BOON10',''], zb5:['BOON11','']};
   var extra=[];
   if(TALEREWARD[npc.flag]){ grantBoon(TALEREWARD[npc.flag][0]);
-    var m=teach(TALEREWARD[npc.flag][1]); if(m) extra.push(m); }
+    if(TALEREWARD[npc.flag][1]){ var m=teach(TALEREWARD[npc.flag][1]); if(m) extra.push(m); } }
   if(npc.flag==='lib4'){ endGame(); return; }
   var b=BOSSTEXT[npc.flag];
   if(b) cut(b.sc,b.t.concat(extra)); else say(["The room is quiet."].concat(extra));
@@ -3025,6 +3388,14 @@ function journalLines(){
                      :(G.flags.launched?"  [  ]  Zelyon - find the Harvest Platform."
                                        :"  [  ]  D-503 can light it whenever you say so."));
     if(G.flags.ascend) L.push("  Ascend learned at the nine wells.");
+    if(G.flags.launched){
+      var AR=[['zb1','The Impact Crater'],['zb2','The Flattened Ward'],['zb3','The Landing Apron'],
+              ['zb4','The Tournament Ring'],['zb5','The Blank Waste']];
+      var done=0; for(var ai=0;ai<AR.length;ai++) if(G.flags[AR[ai][0]]) done++;
+      L.push("  The Lord's people, "+done+" of 5:");
+      for(var aj=0;aj<AR.length;aj++)
+        L.push((G.flags[AR[aj][0]]?"    [done] ":"    [  ]  ")+AR[aj][1]);
+    }
     L.push("");
   }
   var camps=0,CL=['YEFIM','MARFA','OSIP','GRISHA'];
@@ -3043,7 +3414,8 @@ function startBattle(keys,npc){
   for(i=0;i<keys.length;i++){ var m=MONS[keys[i]];
     foes.push({k:keys[i],n:m.n,art:m.art,hp:m.hp,max:m.hp,atk:m.atk,def:m.def,mag:m.mag,spd:m.spd,
       xp:m.xp,g:m.g,sk:m.sk||[],boss:m.boss||0,dead:0,buff:{atk:0,def:0},guard:0,healUsed:0,
-      x:0,y:0,ox:0,oy:0,shake:0,flash:0,fade:0,tag:''}); }
+      x:0,y:0,ox:0,oy:0,shake:0,flash:0,fade:0,tag:'',
+      forms:m.forms?m.forms.slice():null,fi:0}); }
   var tags={},used={};
   for(i=0;i<foes.length;i++) tags[foes[i].n]=(tags[foes[i].n]||0)+1;
   for(i=0;i<foes.length;i++){ var f=foes[i];
@@ -3068,16 +3440,28 @@ function layoutHeroes(){
     if(BT.hflash[G.party[i]]===undefined) BT.hflash[G.party[i]]=0;
   }
 }
+/* Which skills need the player to pick something. This table is the only
+   authority: the battle menu and useSkill both read it, so a new skill kind
+   can never again be castable with a null target. */
+var FOE_TGT={dmg:1,pierce:1,debuff:1,steal:1,multi:1,drain:1};
+var ALLY_TGT={heal:1,revive:1};
+function needsFoe(k){ return !!FOE_TGT[k]; }
+function needsAlly(k){ return !!ALLY_TGT[k]; }
 var FORM_SKILLS=['BLAST','WOLFBOLT'];
+/* form 1 = ascended (pale blue, fast). form 2 = the green rage (huge, brutal). */
+var FORM_MP=[0,3,6];
+var FORM2_SKILLS=['RAGEBLAST','WOLFBOLT'];
 function formMul(id,which){
-  if(!heroState(id).form) return 1;
+  var f=heroState(id).form;
+  if(!f) return 1;
+  if(f===2) return which==='spd'?1.12:(which==='def'?1.3:2.05);
   return which==='spd'?1.4:(which==='def'?1.15:1.62);
 }
 /* while ascended a hero can throw light, whether or not they ever learned how */
 function skillList(id){
   var st=heroState(id), l=st.skills.slice();
-  if(st.form) for(var i=0;i<FORM_SKILLS.length;i++)
-    if(l.indexOf(FORM_SKILLS[i])<0) l.push(FORM_SKILLS[i]);
+  var add=st.form===2?FORM2_SKILLS:(st.form?FORM_SKILLS:null);
+  if(add) for(var i=0;i<add.length;i++) if(l.indexOf(add[i])<0) l.push(add[i]);
   return l;
 }
 function livingFoes(){ return BT.foes.filter(function(f){return !f.dead;}); }
@@ -3103,7 +3487,7 @@ function newRound(){
   if(BT.round>=ROUND_CAP){ forceEndBattle(); return; }
   var o=[],i;
   for(i=0;i<G.party.length;i++){ var id=G.party[i],st=heroState(id); st.guard=0;
-    if(st.form && !st.dead){ st.mp-=3;
+    if(st.form && !st.dead){ st.mp-=FORM_MP[st.form]||3;
       if(st.mp<=0){ st.mp=0; st.form=0; BT.msg=HEROES[id].short+" cannot hold the form."; } }
     if(!st.dead) o.push({side:'h',id:id,spd:stat(id,'spd')*formMul(id,'spd')+Math.random()*4}); }
   for(i=0;i<BT.foes.length;i++){ var f=BT.foes[i]; f.guard=0;
@@ -3122,7 +3506,7 @@ function nextTurn(){
   }
   newRound();
 }
-function advance(){ BT.oi++; nextTurn(); }
+function advance(){ BT.msg2=''; BT.oi++; nextTurn(); }
 /* buffs and debuffs are clamped: without this, a foe that spams a debuff every
    round can drive the party's attack below the damage floor and stall forever */
 function bclamp(v){ return Math.max(-0.55,Math.min(1.2,v)); }
@@ -3134,9 +3518,28 @@ function hDef(id){ var st=heroState(id); return stat(id,'def')*(1+st.buff.def)*(
 function hMag(id){ var st=heroState(id); return stat(id,'mag')*(1+st.buff.atk*0.5)*formMul(id); }
 function fAtk(f){ return f.atk*(1+f.buff.atk); }
 function fDef(f){ return f.def*(1+f.buff.def)*(f.guard?2:1); }
+/* Some enemies do not simply die. As their health falls they shed a form and
+   come back bigger, with different art, harder numbers and a new move list. */
+function checkForms(f){
+  if(!f.forms) return;
+  while(f.fi<f.forms.length && f.hp>0 && f.hp<=f.max*f.forms[f.fi].at){
+    var nf=f.forms[f.fi++];
+    f.n=nf.n||f.n; if(nf.art) f.art=nf.art;
+    f.atk=Math.round(f.atk*(nf.atk||1)); f.def=Math.round(f.def*(nf.def||1));
+    f.mag=Math.round(f.mag*(nf.mag||1)); f.spd=Math.round(f.spd*(nf.spd||1));
+    if(nf.max){ f.max=Math.round(f.max*nf.max); }
+    if(nf.heal) f.hp=Math.min(f.max,f.hp+Math.round(f.max*nf.heal));
+    if(nf.sk) f.sk=nf.sk.slice();
+    f.healUsed=0; f.buff={atk:0,def:0};
+    addFx(nf.fx||'rage', nf.c1||'#ff9a5a', nf.c2||'#ffffff', foeCx(f), foeCy(f), 54, 50);
+    BT.flash=12; BT.shakeT=14;
+    BT.msg2=nf.msg||(f.n+" changes shape.");
+  }
+}
 function hurtFoe(f,d,crit){ f.hp-=d; f.flash=12; f.shake=12;
   pop(foeCx(f),f.y+16,''+d,crit?'#ffd060':'#ffd8d8',crit);
-  if(f.hp<=0){ f.hp=0; f.dead=1; f.fade=1; } }
+  if(f.hp<=0){ f.hp=0; f.dead=1; f.fade=1; }
+  else checkForms(f); }
 function hurtHero(id,d){ var st=heroState(id); st.hp-=d; BT.shakeT=8;
   BT.hshake[id]=12; BT.hflash[id]=12;
   pop(heroCx(id),heroCy(id)-14,''+d,'#ff9a9a');
@@ -3162,6 +3565,10 @@ function spawnFx(sk,srcSide,tgt){
 function useSkill(sk,src,isHero,targ){
   var S=SKILLS[sk],i,fs;
   var pw=S.p, nm=isHero?HEROES[src].short:src.n+src.tag;
+  /* never let a targeted skill run without one */
+  if(!targ && needsFoe(S.k)) targ=isHero?livingFoes()[0]:livingHeroes()[0];
+  if(!targ && needsAlly(S.k)) targ=isHero?livingHeroes()[0]:livingFoes()[0];
+  if(!targ && needsFoe(S.k)) { BT.msg="There is nothing left to aim at."; return; }
   if(isHero){ var st=heroState(src); st.mp-=S.mp; if(st.mp<0)st.mp=0; }
   BT.msg=nm+" uses "+S.n+"!";
   spawnFx(sk,isHero?'h':'e',targ);
@@ -3190,8 +3597,15 @@ function useSkill(sk,src,isHero,targ){
       for(i=0;i<hs5.length;i++){ var b5=heroState(hs5[i]).buff; b5[S.st]=bclamp(b5[S.st]-pw); } }
     BT.msg=nm+" saps the opposition!"; }
   else if(S.k==='ascend'){ var sa=heroState(src);
-    if(sa.form){ BT.msg=nm+" is already ascended."; }
+    if(sa.form){ BT.msg=nm+" is already transformed."; }
     else { sa.form=1; BT.msg=nm+"'s hair turns pale blue. The air starts to move."; } }
+  else if(S.k==='rage'){ var sr=heroState(src);
+    if(sr.form===2){ BT.msg=nm+" is already past holding it in."; }
+    else { sr.form=2;
+      var heal=Math.round(stat(src,'hp')*0.4);
+      sr.hp=Math.min(stat(src,'hp'),sr.hp+heal);
+      pop(heroCx(src),heroCy(src)-14,'+'+heal,'#9aff9a');
+      BT.msg=nm+" stops holding it in. She comes up green, and bigger."; } }
   else if(S.k==='drain'){
     if(isHero){ var dd=magDmg(hMag(src),fDef(targ),pw); hurtFoe(targ,dd);
       healHero(src,Math.round(dd*0.5)); BT.msg=nm+" draws the life out of "+targ.n+targ.tag+"!"; }
@@ -3491,6 +3905,28 @@ function drawFx(f){
     for(i=0;i<3;i++){ var q11=(p*1.4-i*0.2); if(q11<0||q11>1)continue;
       ctx.globalAlpha=(1-q11)*a; ctx.strokeStyle=f.c1; ctx.lineWidth=3;
       ctx.beginPath(); ctx.ellipse(f.x,f.y+10,q11*46,q11*15,0,0,6.283); ctx.stroke(); }
+  } else if(k==='rage'){
+    var pw4=Math.sin(Math.min(1,p*1.2)*Math.PI);
+    ctx.globalAlpha=a*0.9; ctx.fillStyle=f.c1;
+    ctx.fillRect(f.x-20*pw4,0,40*pw4,SH);
+    ctx.fillStyle=f.c2; ctx.fillRect(f.x-7*pw4,0,14*pw4,SH);
+    for(i=0;i<22;i++){ var q13=(p*1.4+i*0.045)%1; ctx.globalAlpha=(1-q13)*a;
+      ctx.fillStyle=i%3?f.c1:f.c2;
+      ctx.fillRect(f.x-40+fxRand(f,i)*80, f.y+52-q13*120, 4, 9); }
+    for(i=0;i<4;i++){ var q14=(p*1.3-i*0.18); if(q14<0||q14>1)continue;
+      ctx.globalAlpha=(1-q14)*a; ctx.strokeStyle=f.c1; ctx.lineWidth=5-i;
+      ctx.beginPath(); ctx.ellipse(f.x,f.y+14,q14*62,q14*20,0,0,6.283); ctx.stroke(); }
+    if(p<0.3){ ctx.globalAlpha=(1-p/0.3)*0.5; ctx.fillStyle=f.c2; ctx.fillRect(0,0,SW,152); }
+  } else if(k==='ragebeam'){
+    var ch2=Math.min(1,p*2.2);
+    ctx.globalAlpha=a;
+    for(i=0;i<5;i++){ var off=(i-2)*13;
+      var bw3=Math.sin(ch2*Math.PI)*(15-Math.abs(i-2)*3);
+      ctx.fillStyle=i%2?f.c1:f.c2;
+      ctx.fillRect(0,f.y+off-bw3/2,f.x+62,bw3); }
+    ctx.fillStyle=f.c2; ctx.beginPath(); ctx.arc(f.x+58,f.y,14*ch2,0,6.283); ctx.fill();
+    for(i=0;i<8;i++){ ctx.globalAlpha=a*0.6; ctx.fillStyle=f.c1;
+      ctx.fillRect(f.x-f.r+fxRand(f,i)*f.r*2, f.y-40+fxRand(f,i+4)*80, 4, 4); }
   } else if(k==='thrust'){
     var st2=Math.min(1,p*2.4);
     ctx.globalAlpha=a; ctx.fillStyle=f.c1;
@@ -3606,8 +4042,8 @@ function updateBattle(){
     if(tap('a')){ var sk=SL[BT.sel2],S=SKILLS[sk];
       if(st.mp<S.mp){ BT.msg="Not enough MP."; return; }
       BT.pending={kind:'skill',sk:sk};
-      if(S.k==='heal'||S.k==='revive'){ BT.sub='tgtAlly'; BT.tsel=0; }
-      else if(S.k==='dmg'||S.k==='pierce'||S.k==='debuff'||S.k==='steal'){ BT.sub='tgtFoe'; BT.tsel=0; }
+      if(needsAlly(S.k)){ BT.sub='tgtAlly'; BT.tsel=0; }
+      else if(needsFoe(S.k)){ BT.sub='tgtFoe'; BT.tsel=0; }
       else { doAction(null); } }
     return; }
   if(BT.sub==='item'){ var l=invList().filter(function(k){return ITEMS[k].bat;});
@@ -3737,26 +4173,32 @@ function drawBattle(){
     if(!hp)continue;
     var hsx=(BT.hshake[id]>0?((Math.random()*5)|0)-2:0)+(hp.ox||0);
     var hsy=(hp.oy||0);
-    var spr=(st.form&&NPCSPR[id+'#A']?NPCSPR[id+'#A']:NPCSPR[id])[1][BT.phase==='anim'&&BT.act&&BT.act.src===id?1:0];
+    var sfx=st.form===2?'#G':(st.form?'#A':'');
+    var sset=(sfx&&NPCSPR[id+sfx])?NPCSPR[id+sfx]:NPCSPR[id];
+    var spr=sset[1][BT.phase==='anim'&&BT.act&&BT.act.src===id?1:0];
+    /* the rage is physically bigger: scale up, keep the feet planted */
+    var gw=st.form===2?44:32, gh=st.form===2?66:48;
+    var gdx=(32-gw)/2, gdy=48-gh;
     if(st.form&&!st.dead){
+      var gre=st.form===2;
       ctx.save(); ctx.globalCompositeOperation='lighter';
-      var au=0.16+0.07*Math.sin(G.anim*0.22+i);
-      ctx.fillStyle='rgba(130,215,255,'+au.toFixed(3)+')';
-      ctx.beginPath(); ctx.ellipse(hp.x+16+hsx,hp.y+26,20,30,0,0,6.283); ctx.fill();
-      for(var sp=0;sp<4;sp++){ var q=((G.anim*2.2+sp*17+i*9)%46)/46;
-        ctx.fillStyle='rgba(190,240,255,'+((1-q)*0.8).toFixed(2)+')';
-        ctx.fillRect(hp.x+4+((sp*9+i*5)%26)+hsx, hp.y+46-q*44, 2, 4); }
+      var au=(gre?0.22:0.16)+0.08*Math.sin(G.anim*0.22+i);
+      ctx.fillStyle=(gre?'rgba(120,255,160,':'rgba(130,215,255,')+au.toFixed(3)+')';
+      ctx.beginPath(); ctx.ellipse(hp.x+16+hsx,hp.y+26+gdy/2,gre?26:20,gre?38:30,0,0,6.283); ctx.fill();
+      for(var sp=0;sp<(gre?7:4);sp++){ var q=((G.anim*2.4+sp*17+i*9)%46)/46;
+        ctx.fillStyle=(gre?'rgba(200,255,210,':'rgba(190,240,255,')+((1-q)*0.85).toFixed(2)+')';
+        ctx.fillRect(hp.x+2+((sp*9+i*5)%30)+hsx, hp.y+46-q*(gre?60:44), gre?3:2, gre?6:4); }
       ctx.restore(); }
     ctx.save();
     if(st.dead) ctx.globalAlpha=0.32;
     ctx.fillStyle='rgba(0,0,0,0.3)'; ctx.beginPath();
-    ctx.ellipse(hp.x+16+hsx,hp.y+47,13,4,0,0,6.283); ctx.fill();
+    ctx.ellipse(hp.x+16+hsx,hp.y+47,st.form===2?18:13,st.form===2?5:4,0,0,6.283); ctx.fill();
     if(st.dead){ ctx.translate(hp.x+16,hp.y+46); ctx.rotate(-1.4); ctx.translate(-16,-46); }
     ctx.imageSmoothingEnabled=false;
-    ctx.drawImage(spr,0,0,16,24,Math.round(hp.x+hsx),Math.round(hp.y+hsy),32,48);
+    ctx.drawImage(spr,0,0,16,24,Math.round(hp.x+hsx+gdx),Math.round(hp.y+hsy+gdy),gw,gh);
     if(BT.hflash[id]>0){ ctx.globalCompositeOperation='lighter';
       ctx.globalAlpha=BT.hflash[id]/20; ctx.fillStyle='#ff8080';
-      ctx.fillRect(hp.x+hsx+4,hp.y+hsy+4,24,42); }
+      ctx.fillRect(hp.x+hsx+gdx+4,hp.y+hsy+gdy+4,gw-8,gh-6); }
     ctx.restore();
     if(BT.phase==='cmd'&&BT.actor===id&&((G.anim>>3)&1))
       drawTxtC(ctx,'v',hp.x+16,hp.y-12,'#f2d178',1);
@@ -3796,7 +4238,8 @@ function drawBattle(){
   else if(BT.phase==='win'){ var wl=wrap(BT.winLines[Math.min(BT.wi,BT.winLines.length-1)],SW-34,1);
     for(i=0;i<wl.length&&i<2;i++) drawTxt(ctx,wl[i],14,160+i*13,'#f2d178',1); }
   else { var ml=wrap(BT.msg||'',SW-34,1);
-    for(i=0;i<ml.length&&i<2;i++) drawTxt(ctx,ml[i],14,160+i*13,'#f2e9d6',1); }
+    for(i=0;i<ml.length&&i<(BT.msg2?1:2);i++) drawTxt(ctx,ml[i],14,160+i*13,'#f2e9d6',1);
+    if(BT.msg2) drawTxt(ctx,wrap(BT.msg2,SW-34,1)[0],14,173,'#ffb45a',1); }
 
   var rlab=(BT.round>ROUND_WEAR)?('Round '+BT.round+'/'+ROUND_CAP):('Round '+BT.round);
   drawTxt(ctx,rlab,SW-14-txtW(rlab,1),184,BT.round>ROUND_WEAR?'#d08a5a':'#6f675c',1);
