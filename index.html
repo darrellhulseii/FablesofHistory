@@ -397,6 +397,83 @@ function actorSprite(cf){
   return out;
 }
 function drawActor(x,cf,d,f){
+  if(cf.shape==='bear') return drawBear(x,cf,d,f);
+  if(cf.shape==='puppet') return drawPuppet(x,cf,d,f);
+  return drawHuman(x,cf,d,f);
+}
+/* Shepard's bear: no clothes, round head, ears on top, stout and slow */
+function drawBear(x,cf,d,f){
+  var fur=cf.skin||'#e8cf9a', drk=shade(fur,-34), lit=shade(fur,20), dk2=shade(fur,-58);
+  var OL='#3a2c18';
+  var la=(f===1)?1:0, lb=(f===2)?1:0, bob=(f===0)?0:-1;
+  px(x,3,19-lb,4,5+lb,drk); px(x,9,19-la,4,5+la,drk);
+  px(x,3,23,4,1,OL); px(x,9,23,4,1,OL);
+  var ty=11+bob;
+  px(x,2,ty,12,9,fur); px(x,2,ty,12,1,lit); px(x,2,ty+8,12,1,dk2);
+  px(x,1,ty,1,9,OL); px(x,14,ty,1,9,OL);
+  if(d===3) px(x,2,ty,12,9,drk);
+  var ay=ty+1+(f?1:0);
+  if(d===0||d===3){ px(x,0,ay,3,7,drk); px(x,13,ay,3,7,drk); }
+  else { px(x,d===1?2:11,ay,3,7,dk2); }
+  var hy=2+bob;
+  px(x,3,hy,10,9,fur); px(x,3,hy,10,1,lit);
+  px(x,2,hy+1,1,7,OL); px(x,13,hy+1,1,7,OL); px(x,3,hy-1,10,1,OL);
+  px(x,2,hy-2,3,3,fur); px(x,11,hy-2,3,3,fur);        /* ears, mirrored */
+  px(x,2,hy-3,3,1,OL); px(x,11,hy-3,3,1,OL);
+  px(x,3,hy-1,1,1,drk); px(x,12,hy-1,1,1,drk);
+  if(d===3){ px(x,3,hy,10,9,drk); px(x,2,hy-2,3,3,drk); px(x,11,hy-2,3,3,drk); }
+  else if(d===0){
+    px(x,5,hy+5,6,4,lit);                              /* muzzle */
+    px(x,7,hy+5,2,2,'#2a1c12');
+    px(x,5,hy+3,2,2,'#2a1c12'); px(x,9,hy+3,2,2,'#2a1c12');
+    px(x,5,hy+3,1,1,'#f4f0e8'); px(x,10,hy+3,1,1,'#f4f0e8');
+    px(x,6,hy+8,4,1,shade(fur,-46));
+  } else {
+    var sx=(d===1)?2:10;
+    px(x,sx,hy+4,4,4,lit); px(x,d===1?2:12,hy+4,2,2,'#2a1c12');
+    px(x,d===1?5:9,hy+3,2,2,'#2a1c12');
+  }
+  if(cf.asc){ var ac=cf.ascCol||'#cdefff';
+    px(x,3,hy-1,10,1,ac); px(x,2,hy-3,3,1,ac); px(x,11,hy-3,3,1,ac); }
+}
+/* a marionette: jointed limbs, a cone cap, and a nose that is longer than it should be */
+function drawPuppet(x,cf,d,f){
+  var wood=cf.skin||'#e6c898', drk=shade(wood,-40), lit=shade(wood,18);
+  var coat=cf.coat||'#c8543c', cd=shade(coat,-34), cl=shade(coat,24);
+  var cap=cf.hair||'#b4842c', ruff=cf.acc||'#e8e2d4';
+  var OL='#2e2116';
+  var la=(f===1)?-1:(f===2?1:0), lb=-la, bob=(f===0)?0:-1;
+  px(x,4,18,3,6,wood); px(x,9,18,3,6,wood);
+  px(x,4,18+la,3,1,drk); px(x,9,18+lb,3,1,drk);       /* knee joints */
+  px(x,3,23,5,1,OL); px(x,8,23,5,1,OL);
+  var ty=11+bob;
+  px(x,4,ty,8,8,coat); px(x,4,ty,8,1,cl); px(x,4,ty+7,8,1,cd);
+  px(x,3,ty,1,8,OL); px(x,12,ty,1,8,OL);
+  if(d===3) px(x,4,ty,8,8,cd);
+  px(x,4,ty-1,8,2,ruff);                                /* collar, symmetric */
+  var ay=ty+2;
+  if(d===0||d===3){ px(x,2,ay+(f?1:0),2,7,wood); px(x,12,ay+(f?-1:0),2,7,wood);
+    px(x,2,ay+3,2,1,drk); px(x,12,ay+3,2,1,drk); }
+  else { px(x,d===1?3:11,ay,2,7,drk); }
+  var hy=3+bob;
+  px(x,4,hy,8,8,wood); px(x,4,hy,8,1,lit);
+  px(x,3,hy+1,1,6,OL); px(x,12,hy+1,1,6,OL); px(x,4,hy-1,8,1,OL);
+  poly(x,[8,hy-9,11,hy-1,5,hy-1],cap);                  /* the cone cap */
+  px(x,4,hy-2,8,2,cap); px(x,4,hy-2,8,1,shade(cap,24));
+  if(d===3){ px(x,4,hy,8,8,shade(wood,-22)); }
+  else if(d===0){
+    px(x,5,hy+3,2,2,'#20160e'); px(x,9,hy+3,2,2,'#20160e');
+    px(x,5,hy+3,1,1,'#f4f0e8'); px(x,10,hy+3,1,1,'#f4f0e8');
+    px(x,7,hy+5,2,3,lit); px(x,7,hy+6,2,1,drk);         /* nose, on the centre line */
+    px(x,6,hy+8,4,1,shade(wood,-48));
+  } else {
+    var ex=(d===1)?5:9;
+    px(x,ex,hy+3,2,2,'#20160e');
+    px(x,d===1?0:11,hy+5,5,2,lit); px(x,d===1?0:11,hy+6,5,1,drk);
+  }
+  if(cf.asc){ var ac2=cf.ascCol||'#cdefff'; px(x,4,hy-3,8,1,ac2); }
+}
+function drawHuman(x,cf,d,f){
   var skin=cf.skin||'#d8a878', hair=cf.hair||'#3a2a1a', coat=cf.coat||'#4a4a56',
       acc=cf.acc||null, hat=cf.hat||null;
   var lit=shade(coat,26), drk=shade(coat,-30), dk2=shade(coat,-56);
@@ -414,6 +491,10 @@ function drawActor(x,cf,d,f){
   px(x,3,22,4,2,'#1c1a20'); px(x,9,22,4,2,'#1c1a20');
   /* --- torso --- */
   var ty=11+bob;
+  if(cf.skirt){
+    px(x,2,ty+5,12,5,coat); px(x,1,ty+8,14,2,drk);
+    px(x,1,ty+9,14,1,dk2);
+  }
   px(x,3,ty,10,9,coat);
   px(x,3,ty,10,1,lit);
   px(x,3,ty,2,9,(d===2)?drk:lit);
@@ -1460,6 +1541,19 @@ var SKILLS={
  POINTBLANK:{n:"Point Blank",mp:16,k:'dmg',p:2.7,fx:['muzzle','#ffffff','#ff6a20'],d:"He waits until it cannot miss."},
  WHIPCRACK:{n:"Whipcrack",mp:10,k:'debuff',p:0.4,st:'def',fx:['chainwhip','#b8bcc8','#ffd070'],d:"Strips guard off a target."},
  DRAGDOWN:{n:"Drag Down",mp:14,k:'dmg',p:2.1,fx:['chainwhip','#98a0b0','#ff6060'],d:"Hooks it off its feet."},
+ /* --- Edward Bear --- */
+ HUNNYPOT:{n:"The Honey Pot",mp:8,k:'heal',p:150,fx:['bloom','#e8b83c','#fff0b0'],d:"A little something at eleven o'clock. Restores an ally."},
+ STOUTNESS:{n:"Stoutness Exercises",mp:10,k:'buff',p:0.5,st:'def',fx:['aura','#d8b878','#fff0c0'],d:"Done every morning, before the mirror. Raises the party's guard."},
+ HUM:{n:"A Hum",mp:0,k:'mpall',p:30,fx:['rings','#f0e0a0','#ffffff'],d:"He makes it up as he goes. Restores the party's MP."},
+ /* --- the Wooden Soldier --- */
+ LONGNOSE:{n:"The Long Nose",mp:9,k:'debuff',p:0.45,st:'atk',fx:['thrust','#d8a860','#ffe0b0'],d:"A lie that is found out immediately. Saps a foe's attack."},
+ KINDLING:{n:"Kindling",mp:12,k:'dmg',p:2.2,fx:['column','#ff8a30','#ffd070'],d:"He fell asleep with his feet on the brazier once. He remembers the heat."},
+ NOSTRINGS:{n:"No Strings",mp:14,k:'selfbuff',p:0.55,fx:['ascend','#c8a060','#ffe8c0'],d:"Nobody is holding the other end. Raises his own attack and speed."},
+ /* --- Alice --- */
+ DRINKME:{n:"Drink Me",mp:8,k:'debuff',p:0.5,st:'def',fx:['panes','#8ad0ff','#ffffff'],d:"The foe comes down to ten inches. Its guard goes with it."},
+ EATME:{n:"Eat Me",mp:10,k:'selfbuff',p:0.5,fx:['pillar','#f0d8ff','#ffffff'],d:"Nine feet tall and quite indignant about it."},
+ PACKOFCARDS:{n:"A Pack of Cards",mp:16,k:'aoe',p:1.55,fx:['panes','#f0e8dc','#c02828'],d:"The whole court comes down on them at once."},
+ VERDICT:{n:"Sentence First",mp:18,k:'pierce',p:2.5,fx:['guillotine','#e8e8f0','#d84040'],d:"Verdict afterwards. Nothing about it is fair and it does not need to be."},
  /* --- the green world --- */
  ASCEND:{n:"Ascend",mp:18,k:'ascend',p:0,fx:['ascend','#8fd8ff','#ffffff'],d:"The hair goes pale blue and the air starts to move. Lasts the battle."},
  RAGE:{n:"Green Rage",mp:22,k:'rage',p:0,fx:['rage','#7ce89a','#eaffd0'],d:"She stops holding it in. Grows, and hits far harder. Costs a lot to keep up."},
@@ -1576,6 +1670,24 @@ var HEROES={
    learn:{1:['WHIPCRACK'],5:['DRAGDOWN']},
    art:{skin:'#b8845a',hair:'#1f1a14',coat:'#3a3a42',acc:'#7a6a4a'},
    bio:"Quarry hand. He was chained to the face for six years and kept the chain when they stopped watching."},
+ BEAR:{id:'BEAR',n:"Edward Bear",short:"Edward",wfx:['impact','#f0dcb0','#c89a4a'],
+   hp:172,mp:22,atk:17,def:19,mag:7,spd:8,
+   ghp:23,gmp:4,gatk:2.9,gdef:3.2,gmag:1.2,gspd:1.0,
+   learn:{1:['HUNNYPOT'],4:['STOUTNESS'],9:['HUM']},
+   art:{shape:'bear',skin:'#e8cf9a',hair:'#c9a866',coat:'#dcbf86'},
+   bio:"A bear of very little brain and a great deal of patience, found halfway through the wall of a cottage made of bread. He is not sorry."},
+ PUPPET:{id:'PUPPET',n:"The Wooden Soldier",short:"Soldier",wfx:['thrust','#e0c088','#8a5a28'],
+   hp:138,mp:30,atk:19,def:15,mag:13,spd:17,
+   ghp:17,gmp:5,gatk:3.2,gdef:2.3,gmag:2.2,gspd:2.2,
+   learn:{1:['LONGNOSE'],5:['KINDLING'],10:['NOSTRINGS']},
+   art:{shape:'puppet',skin:'#e6c898',hair:'#b4842c',coat:'#c8543c',acc:'#e8e2d4'},
+   bio:"A marionette with nobody holding the other end. The One State has a word for a person who moves when pulled, and he has met a great many of them."},
+ ALICE:{id:'ALICE',n:"Alice",short:"Alice",wfx:['crescent','#f4c8dc','#d86a9a'],
+   hp:116,mp:50,atk:11,def:12,mag:21,spd:16,
+   ghp:14,gmp:8,gatk:1.8,gdef:1.9,gmag:3.6,gspd:2.1,
+   learn:{1:['DRINKME'],4:['EATME'],8:['PACKOFCARDS'],13:['VERDICT']},
+   art:{skin:'#f0d2b4',hair:'#d8b45c',coat:'#4a6fa8',skirt:1,acc:'#f4f2ea'},
+   bio:"She has been to a court where the sentence came before the verdict, and she was not impressed by it there either."},
  NAEL:{id:'NAEL',n:"Nael of the Green World",short:"Nael",wfx:['palm','#a8f0d0','#ffffff'],
    hp:142,mp:52,atk:17,def:15,mag:21,spd:18,
    ghp:18,gmp:9,gatk:2.9,gdef:2.4,gmag:3.8,gspd:2.3,
@@ -1774,6 +1886,27 @@ UND20:{t:"Love really consists in the right, freely given by the beloved object,
 UND21:{t:"Man is fond of counting his troubles, but he does not count his joys.",a:"Dostoevsky",w:"Notes from the Underground",tr:"tr. Garnett, 1918"},
 UND22:{t:"I am alone and they are all.",a:"Dostoevsky",w:"Notes from the Underground",tr:"tr. Garnett, 1918"},
 UND23:{t:"Civilisation only develops in man a capacity for feeling a greater variety of sensations.",a:"Dostoevsky",w:"Notes from the Underground",tr:"tr. Garnett, 1918"},
+/* --- A. A. Milne, Winnie-the-Pooh, 1926. US public domain since 2022.
+       The bear is called Edward Bear in the book's own first sentence, and that
+       is the name used here; the later trade dress is nobody's to borrow. --- */
+MIL1:{t:"Here is Edward Bear, coming downstairs now, bump, bump, bump, on the back of his head, behind Christopher Robin.",a:"A. A. Milne",w:"Winnie-the-Pooh",tr:"1926"},
+MIL2:{t:"It's a very funny thought that, if Bears were Bees, they'd build their nests at the bottom of trees.",a:"A. A. Milne",w:"Winnie-the-Pooh",tr:"1926"},
+MIL3:{t:"I am a Bear of Very Little Brain, and long words Bother me.",a:"A. A. Milne",w:"Winnie-the-Pooh",tr:"1926"},
+MIL4:{t:"Tut-tut, it looks like rain.",a:"A. A. Milne",w:"Winnie-the-Pooh",tr:"1926"},
+MIL5:{t:"Nobody can be uncheered with a balloon.",a:"A. A. Milne",w:"Winnie-the-Pooh",tr:"1926"},
+/* --- Collodi, The Adventures of Pinocchio, tr. M. A. Murray, 1892 --- */
+COL1:{t:"Once upon a time there was a piece of wood.",a:"Collodi",w:"The Adventures of Pinocchio",tr:"tr. Murray, 1892"},
+COL2:{t:"There are lies that have short legs, and lies that have long noses.",a:"Collodi",w:"The Adventures of Pinocchio",tr:"tr. Murray, 1892"},
+COL3:{t:"Woe to boys who rebel against their parents, and who run away capriciously from their home.",a:"Collodi",w:"The Adventures of Pinocchio",tr:"tr. Murray, 1892"},
+COL4:{t:"Boys who insist on having their own way, sooner or later repent it bitterly.",a:"Collodi",w:"The Adventures of Pinocchio",tr:"tr. Murray, 1892"},
+/* --- Lewis Carroll, 1865 and 1871 --- */
+CAR1:{t:"No, no! Sentence first - verdict afterwards.",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR2:{t:"We're all mad here.",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR3:{t:"Would you tell me, please, which way I ought to go from here? - That depends a good deal on where you want to get to.",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR4:{t:"Off with her head!",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR5:{t:"You're nothing but a pack of cards!",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR6:{t:"Begin at the beginning, and go on till you come to the end: then stop.",a:"Lewis Carroll",w:"Alice's Adventures in Wonderland",tr:"1865"},
+CAR7:{t:"Why, sometimes I've believed as many as six impossible things before breakfast.",a:"Lewis Carroll",w:"Through the Looking-Glass",tr:"1871"},
 /* --- Dostoevsky, The House of the Dead, tr. Constance Garnett, 1915.
        Russian prison literature begins here; everything written about the
        camps in the century that followed is downstream of this book. --- */
@@ -2064,6 +2197,81 @@ LAY.house=[
 function remap(rows,m){ return rows.map(function(r){ var o='';
   for(var i=0;i<r.length;i++){ var c=r[i]; o+=(m[c]||c); } return o; }); }
 
+
+/* ================= SITE EXTERIORS =================
+   Every place on a world map is painted from its own blueprint, so a Grimm
+   cottage, a harvest arena and a Russian ward city never look alike from
+   outside. ' ' leaves the terrain alone; 'D' marks the doorway.        */
+var SITE_ART={
+/* --- the four cities of the One State --- */
+ VET:["   rr  rr ",
+      "  rrrrrr  ",
+      " ######## ",
+      " #b####b# ",
+      " ###DD### ",
+      ",,,,,,,,,,"],
+ KHO:["  M    M  ",
+      "  rrrrrr  ",
+      " bbbbbbbb ",
+      " bb#DD#bb ",
+      "RRRRRRRRRR",
+      ",,,,,,,,,,"],
+ ZAR:["  rrrrrr  ",
+      " bbbbbbbb ",
+      "Zb######bZ",
+      " bb#DD#bb ",
+      "SSSSSSSSSS",
+      "SS,,,,,,SS"],
+ CAP:[" M      M ",
+      "  bbbbbb  ",
+      " bbbbbbbb ",
+      " bb#DD#bb ",
+      "GGGGGGGGGG",
+      "GG,,,,,,GG"],
+/* --- the eight tales --- */
+ TALE1:["  FFFF  "," r####r "," ###### "," ##DD## ","vv,,,,vv"],
+ TALE2:["N      N"," rrrrrr "," wwwwww "," wwDDww ","x ,,,, x"],
+ TALE3:["  rrr   ","  bbb   ","  bbb   "," qbDDbq "," ,,,,,, "],
+ TALE4:[" Z    Z ","  wwww  "," wwwwww "," wwDDww ","GG,,,,GG"],
+ TALE5:["J      J"," rrrrrr "," ###### "," ##DD## ","TT,,,,TT"],
+ TALE6:["~~ NN ~~"," rrrrrr "," wwwwww "," wwDDww ","~~,,,,~~"],
+ TALE7:["  ____  "," rrrrrr "," bbbbbb ","ybbDDbby","__,,,,__"],
+ TALE8:["^^^^^^^^","^^VVVV^^","^fVVVVf^","^^fDDf^^","  ,,,,  "],
+/* --- the four camps --- */
+ CAMP1:[" Z    Z "," rrrrrr "," bbbbbb "," bbDDbb ","SS,,,,SS"],
+ CAMP2:["A      A"," xrrrrx "," ###### "," ##DD## ","AA,,,,AA"],
+ CAMP3:["e      e"," bbbbbb "," bbbbbb "," bbDDbb ","ee,,,,ee"],
+ CAMP4:["^^^^^^^^","^o^^^^o^","^^bbbb^^","^^bDDb^^","oo,,,,oo"],
+/* --- the green world --- */
+ ZVIL:[" QQQQQQ ","QQQQQQQQ"," bbbbbb "," bbDDbb ","zz,,,,zz"],
+ ZTEMPLE:["MM    MM"," MMMMMM "," bbbbbb "," bbDDbb ","gg,,,,gg"],
+ ZSPRING:["Y      Y","  QQQQ  "," bbbbbb "," bbDDbb ","uu,,,,uu"],
+/* --- the harvest arenas, each staged like the fight it holds --- */
+ ARENA1:["oo    oo","o gggg o"," gxxxxg "," ggDDgg ","oo,,,,oo"],
+ ARENA2:["x  bb  x"," xxxxxx "," bxxxxb "," xxDDxx ","xx,,,,xx"],
+ ARENA3:["M      M"," SSSSSS "," SRRRRS "," SSDDSS ","MM,,,,MM"],
+ ARENA4:["Z      Z"," SSSSSS "," SCCCCS "," SSDDSS ","Z ,,,, Z"],
+ ARENA5:["VV____VV","V______V"," ______ "," __DD__ ","__,,,,__"]
+};
+/* paints a blueprint and hands back the doorway it created */
+function paintSite(g,cx,cy,id,W,H,ground,prot){
+  var art=SITE_ART[id], doors=[], r,c;
+  if(!art) return doors;
+  for(r=-1;r<=art.length;r++) for(c=-1;c<=art[0].length;c++){
+    var gy=cy+r, gx=cx+c;
+    if(gy>2&&gy<H-3&&gx>2&&gx<W-3) g[gy][gx]=ground(gy);
+  }
+  for(r=0;r<art.length;r++) for(c=0;c<art[r].length;c++){
+    var ch=art[r][c]; if(ch===' ') continue;
+    var y2=cy+r, x2=cx+c;
+    if(y2<1||y2>=H-1||x2<1||x2>=W-1) continue;
+    g[y2][x2]=ch;
+    if(prot && ch!==',') prot[x2+','+y2]=1;     /* roads must route around it */
+    if(ch==='D') doors.push([x2,y2]);
+  }
+  return doors;
+}
+
 /* ================= OVERWORLD GENERATION ================= */
 var OW_W=76,OW_H=56;
 /* [x, y, map id] — doors and every return warp are derived from these, so the
@@ -2073,7 +2281,7 @@ var OW_HUTS=[[17,31,'TALE1'],[16,13,'TALE2'],[60,27,'TALE3'],[64,47,'TALE4'],
              [7,21,'TALE5'],[36,41,'TALE6'],[45,19,'TALE7'],[47,50,'TALE8'],
              [26,24,'CAMP1'],[50,34,'CAMP2'],[12,48,'CAMP3'],[68,20,'CAMP4']];
 function buildOverworld(){
-  var g=[],y,x,i;
+  var g=[],y,x,i, DOORS={}, PROT={};
   for(y=0;y<OW_H;y++){ g[y]=[]; for(x=0;x<OW_W;x++) g[y][x]='.'; }
   seed(20260907);
   for(y=0;y<OW_H;y++)for(x=0;x<OW_W;x++){
@@ -2107,48 +2315,31 @@ function buildOverworld(){
   /* farm belt around Vetrograd */
   for(y=44;y<50;y++) for(x=6;x<22;x++) if(y<OW_H-3&&rnd()<0.5) g[y][x]=(rnd()<0.7?'A':'J');
 
-  function stamp(cx,cy){
-    var yy,xx;
-    for(yy=0;yy<4;yy++) for(xx=0;xx<6;xx++) g[cy+yy][cx+xx]=(yy===0)?'r':'b';
-    g[cy+3][cx+2]='D'; g[cy+3][cx+3]='D';
-    for(xx=-1;xx<7;xx++) if(cy+4<OW_H&&cx+xx>=0&&cx+xx<OW_W) g[cy+4][cx+xx]=',';
-  }
-  function hut(cx,cy){
-    var yy,xx;
-    for(yy=-1;yy<5;yy++) for(xx=-2;xx<6;xx++){
-      var gy=cy+yy,gx=cx+xx;
-      if(gy>2&&gy<OW_H-3&&gx>2&&gx<OW_W-3&&g[gy][gx]!=='D') g[gy][gx]=(gy<9?'_':'.'); }
-    for(xx=0;xx<4;xx++) g[cy][cx+xx]='r';
-    for(yy=1;yy<3;yy++) for(xx=0;xx<4;xx++) g[cy+yy][cx+xx]='b';
-    g[cy+2][cx+1]='D'; g[cy+2][cx+2]='D';
-    for(xx=-1;xx<5;xx++) g[cy+3][cx+xx]=',';
-    g[cy+3][cx-2]='N'; g[cy+3][cx+5]='N'; g[cy-1][cx-1]='N'; g[cy-1][cx+4]='N';
+  function ground(gy){ return gy<9?'_':'.'; }
+  function place(site){
+    DOORS[site[2]]=paintSite(g,site[0],site[1],site[2],OW_W,OW_H,ground,PROT);
   }
   function road(ax,ay,bx,by){
     var cx=ax,cy=ay,guard=0;
     while((cx!==bx||cy!==by)&&guard++<700){
       if(cx!==bx) cx+=(bx>cx?1:-1); else if(cy!==by) cy+=(by>cy?1:-1);
       if(cy<0||cy>=OW_H||cx<0||cx>=OW_W) break;
+      if(PROT[cx+','+cy]) continue;              /* never pave over a building */
       var t=g[cy][cx];
-      if(t==='~'){ g[cy][cx]='='; } else if(t!=='D'&&t!=='r'&&t!=='b') g[cy][cx]=',';
+      if(t==='~'){ g[cy][cx]='='; } else g[cy][cx]=',';
     }
   }
-  for(i=0;i<OW_CITIES.length;i++) stamp(OW_CITIES[i][0],OW_CITIES[i][1]);
-  for(i=0;i<OW_HUTS.length;i++) hut(OW_HUTS[i][0],OW_HUTS[i][1]);
-  for(i=0;i<OW_CITIES.length;i++){ var c=OW_CITIES[i];
-    for(var k=-1;k<7;k++){ var yy2=c[1]+4, xx2=c[0]+k;
-      if(yy2<OW_H&&xx2>=0&&xx2<OW_W&&g[yy2][xx2]!=='D') g[yy2][xx2]=','; } }
-  for(i=0;i<OW_HUTS.length;i++){ var h=OW_HUTS[i];
-    for(var k2=-1;k2<5;k2++){ var yy3=h[1]+3, xx3=h[0]+k2;
-      if(yy3<OW_H&&xx3>=0&&xx3<OW_W&&g[yy3][xx3]!=='D') g[yy3][xx3]=','; } }
+  for(i=0;i<OW_CITIES.length;i++) place(OW_CITIES[i]);
+  for(i=0;i<OW_HUTS.length;i++) place(OW_HUTS[i]);
   /* trunk roads between the four cities */
   road(11,44,59,44); road(59,44,61,15); road(61,15,34,15); road(34,15,34,9);
   road(11,44,11,34); road(11,34,34,34); road(34,34,34,20);
   /* spurs out to every outlying door */
-  var HOME=[OW_CITIES[0][0]+2,OW_CITIES[0][1]+4];
-  function doorOf(a,city){ return city?[a[0]+2,a[1]+4]:[a[0]+1,a[1]+3]; }
-  for(i=0;i<OW_HUTS.length;i++){ var d0=doorOf(OW_HUTS[i],0);
-    road(d0[0],d0[1],HOME[0],HOME[1]); }
+  /* the approach square is the tile directly below a doorway */
+  function approach(id){ var d=DOORS[id]; return d&&d.length?[d[0][0],d[0][1]+1]:null; }
+  var HOME=approach(OW_CITIES[0][2]);
+  for(i=0;i<OW_HUTS.length;i++){ var d0=approach(OW_HUTS[i][2]);
+    if(d0) road(d0[0],d0[1],HOME[0],HOME[1]); }
   /* guarantee reachability whatever the terrain rolled */
   function reach(sx,sy){
     var seen={},q=[[sx,sy]]; seen[sx+','+sy]=1;
@@ -2162,8 +2353,8 @@ function buildOverworld(){
     return seen;
   }
   var doors=[];
-  for(i=0;i<OW_CITIES.length;i++) doors.push(doorOf(OW_CITIES[i],1));
-  for(i=0;i<OW_HUTS.length;i++) doors.push(doorOf(OW_HUTS[i],0));
+  for(i=0;i<OW_CITIES.length;i++){ var ac=approach(OW_CITIES[i][2]); if(ac) doors.push(ac); }
+  for(i=0;i<OW_HUTS.length;i++){ var ah=approach(OW_HUTS[i][2]); if(ah) doors.push(ah); }
   for(var pass=0;pass<4;pass++){
     var seen=reach(HOME[0],HOME[1]), missing=0;
     for(i=0;i<doors.length;i++)
@@ -2171,7 +2362,7 @@ function buildOverworld(){
     if(!missing) break;
   }
   var rows=[]; for(y=0;y<OW_H;y++) rows.push(g[y].join(''));
-  return {rows:rows,cities:OW_CITIES,huts:OW_HUTS};
+  return {rows:rows,cities:OW_CITIES,huts:OW_HUTS,doors:DOORS};
 }
 
 /* ================= THE GREEN WORLD ================= */
@@ -2180,7 +2371,7 @@ var Z_SITES=[[10,26,'ZVIL'],[40,10,'ZTEMPLE'],[43,31,'ZSPRING'],
              [20,14,'ARENA1'],[32,21,'ARENA2'],[47,20,'ARENA3'],
              [25,33,'ARENA4'],[14,7,'ARENA5']];
 function buildZelyon(){
-  var g=[],y,x,i;
+  var g=[],y,x,i, ZDOORS={}, ZPROT={};
   for(y=0;y<ZH;y++){ g[y]=[]; for(x=0;x<ZW;x++) g[y][x]='z'; }
   seed(770311);
   for(y=0;y<ZH;y++)for(x=0;x<ZW;x++){
@@ -2197,28 +2388,22 @@ function buildZelyon(){
   for(y=ly-4;y<ly+5;y++) for(x=lx-6;x<lx+7;x++){
     var d2=(x-lx)*(x-lx)/2.2+(y-ly)*(y-ly);
     if(d2<18&&y>2&&y<ZH-3&&x>2&&x<ZW-3) g[y][x]='u'; }
-  function dome(cx,cy){
-    var yy,xx;
-    for(yy=-1;yy<4;yy++) for(xx=-2;xx<6;xx++){
-      var gy=cy+yy,gx=cx+xx;
-      if(gy>2&&gy<ZH-3&&gx>2&&gx<ZW-3) g[gy][gx]='z'; }
-    for(xx=0;xx<4;xx++) g[cy][cx+xx]='Q';
-    for(yy=1;yy<3;yy++) for(xx=0;xx<4;xx++) g[cy+yy][cx+xx]='b';
-    g[cy+2][cx+1]='D'; g[cy+2][cx+2]='D';
-    for(xx=-1;xx<5;xx++) g[cy+3][cx+xx]=',';
-  }
+  function zground(){ return 'z'; }
+  function dome(site){ ZDOORS[site[2]]=paintSite(g,site[0],site[1],site[2],ZW,ZH,zground,ZPROT); }
   function road(ax,ay,bx,by){
     var cx=ax,cy=ay,guard=0;
     while((cx!==bx||cy!==by)&&guard++<500){
       if(cx!==bx) cx+=(bx>cx?1:-1); else if(cy!==by) cy+=(by>cy?1:-1);
       if(cy<0||cy>=ZH||cx<0||cx>=ZW) break;
+      if(ZPROT[cx+','+cy]) continue;
       var t=g[cy][cx];
-      if(t==='u'){ g[cy][cx]='='; } else if(t!=='D'&&t!=='Q'&&t!=='b') g[cy][cx]=',';
+      if(t==='u'){ g[cy][cx]='='; } else g[cy][cx]=',';
     }
   }
-  for(i=0;i<Z_SITES.length;i++) dome(Z_SITES[i][0],Z_SITES[i][1]);
-  var HOME=[Z_SITES[0][0]+1,Z_SITES[0][1]+3];
-  for(i=1;i<Z_SITES.length;i++) road(Z_SITES[i][0]+1,Z_SITES[i][1]+3,HOME[0],HOME[1]);
+  for(i=0;i<Z_SITES.length;i++) dome(Z_SITES[i]);
+  function zapproach(id){ var d=ZDOORS[id]; return d&&d.length?[d[0][0],d[0][1]+1]:null; }
+  var HOME=zapproach(Z_SITES[0][2]);
+  for(i=1;i<Z_SITES.length;i++){ var za=zapproach(Z_SITES[i][2]); if(za) road(za[0],za[1],HOME[0],HOME[1]); }
   /* the landing site, bottom-left, where the Integral sets down */
   for(y=ZH-8;y<ZH-3;y++) for(x=5;x<14;x++) g[y][x]='S';
   g[ZH-4][8]='D'; g[ZH-4][9]='D';
@@ -2235,7 +2420,7 @@ function buildZelyon(){
     return seen;
   }
   var doors=[[8,ZH-4]];
-  for(i=0;i<Z_SITES.length;i++) doors.push([Z_SITES[i][0]+1,Z_SITES[i][1]+3]);
+  for(i=0;i<Z_SITES.length;i++){ var zd=zapproach(Z_SITES[i][2]); if(zd) doors.push(zd); }
   for(var pass=0;pass<4;pass++){
     var seen=reach(HOME[0],HOME[1]),missing=0;
     for(i=0;i<doors.length;i++)
@@ -2243,7 +2428,7 @@ function buildZelyon(){
     if(!missing) break;
   }
   var rows=[]; for(y=0;y<ZH;y++) rows.push(g[y].join(''));
-  return {rows:rows,sites:Z_SITES};
+  return {rows:rows,sites:Z_SITES,doors:ZDOORS};
 }
 
 /* ================= MAPS ================= */
@@ -2402,6 +2587,8 @@ mkmap({id:'ZARMIN',name:"The Great Auditorium",rows:remap(LAY.min,{'x':'M'}),dar
    tk:["We are not a man. We are a procedure with eyes.",
      "We have read your notebook. Every page. We found it unproductive and very lonely.",
      "You want choice. Our founder settled that question before either of us was born.",q('WE3'),
+     "There is a children's book, banned here, with our procedure in it word for word.",q('CAR1'),
+     "The author intended it as nonsense. We found it serviceable.",
      "Choice is only the noise a system makes before it is tuned."]}],
  enc:{rate:0.061,tab:[['CENSOR',3],['CHOIR',4],['ASSESSOR',3],['ARCHIVE',3],['SPEAKER',2],['GUARDIAN',2],['WATCH',3],['EFFIGY',2],['SHOCK',2],['IDOL',2],['AUTOM',2]]}});
 
@@ -2662,6 +2849,32 @@ function arena(id,name,rows,dark,boss,who,art,lines){
     warps:[{x:8,y:12,to:'ZELYON',tx:0,ty:0},{x:9,y:12,to:'ZELYON',tx:0,ty:0}],
     npcs:[{x:8,y:3,art:art,dir:0,name:who,boss:boss,flag:'zb'+id.slice(-1),tk:lines}]});
 }
+/* --- Edward Bear, in the wall of the cottage made of bread --- */
+MAPS.TALE1.npcs.push({x:4,y:6,art:'BEAR',dir:0,name:"Edward Bear",ev:'joinBear',tk:[
+  "There is a bear most of the way through the south wall of the cottage. The wall is bread. He has been at it since Tuesday.",
+  q('MIL1'),
+  "He gets himself out, eventually, and sits down on the step to think about the arrangement here.",
+  q('MIL2'),
+  "He has worked out that a house made of food is a trap, which is more than the ward children managed, and he has decided to stay and be in the way of it."]});
+/* --- the Wooden Soldier, in the room where straw is spun into gold --- */
+MAPS.TALE3.npcs.push({x:12,y:6,art:'PUPPET',dir:0,name:"The Wooden Soldier",ev:'joinPuppet',tk:[
+  "Propped against the wheel, arms crossed, entirely unbothered: a marionette with no strings on him.",
+  q('COL1'),
+  "That is how he begins, he says, and everyone forgets it and thinks he began as a boy.",
+  "The little man at the wheel offered him a bargain. He has heard bargains before, from a fox and a cat on a road at night.",
+  q('COL4'),
+  "He knows exactly one thing worth knowing about liars, and he learned it the hard way, in front of a mirror.",
+  q('COL2')]});
+/* --- Alice, on the wrong side of the glass --- */
+MAPS.TALE4.npcs.push({x:4,y:6,art:'ALICE',dir:0,name:"Alice",ev:'joinAlice',tk:[
+  "A girl is sitting in front of the mirror with her chin in her hands, arguing with it, and appears to be winning.",
+  q('CAR2'),
+  "She has been somewhere with a court in it. She would like you to understand what the court was like before you go any further.",
+  q('CAR1'),
+  "She says it exactly the way you have heard it said in a Ministry corridor, and then she looks at you to check that you heard it.",
+  "She has no particular plan. She would just like to know where this is going.",
+  q('CAR3')]});
+
 arena('ARENA1',"The Impact Crater",LAY.crater,0.14,'Z2',"Vask the Herald",'BOSS',
  ["The pod came down two days before the fleet did. That is the whole job: land early, read the numbers, radio them up.",
   "Population, yield, resistance. Three figures. I have never once had to send a fourth.",
@@ -2694,23 +2907,24 @@ arena('ARENA5',"The Blank Waste",LAY.waste,0.05,'Z6',"The Appetite",'BOSS',
 
 /* ================= LINK THE TWO WORLD MAPS ================= */
 (function(){
-  function link(world,sites,cityLike){
+  function link(world,sites,doorMap,cityLike){
     var W=MAPS[world].warps;
     for(var i=0;i<sites.length;i++){
-      var c=sites[i], id=c[2];
-      if(!MAPS[id]) continue;
-      var dx=c[0]+(cityLike?2:1), dy=c[1]+(cityLike?3:2);
+      var id=sites[i][2], d=doorMap[id];
+      if(!MAPS[id]||!d||!d.length) continue;
       var e=MAPS[id].entry||(cityLike?[11,16]:[8,11]);
-      var tx=e[0], ty=e[1];
-      W.push({x:dx,y:dy,to:id,tx:tx,ty:ty},{x:dx+1,y:dy,to:id,tx:tx+1,ty:ty});
-      var back=MAPS[id].warps.filter(function(w){ return w.to===world; }), n=0;
-      for(var j=0;j<back.length;j++){ back[j].tx=dx+Math.min(n,1); back[j].ty=dy+1; n++; }
+      for(var k=0;k<d.length;k++)
+        W.push({x:d[k][0],y:d[k][1],to:id,tx:e[0]+Math.min(k,1),ty:e[1]});
+      var back=MAPS[id].warps.filter(function(w){ return w.to===world; });
+      for(var j=0;j<back.length;j++){
+        var src=d[Math.min(j,d.length-1)];
+        back[j].tx=src[0]; back[j].ty=src[1]+1;
+      }
     }
   }
-  link('OW',OWDATA.cities,1);
-  link('OW',OWDATA.huts,0);
-  /* the camps hang off the same hut table, so their doors are already placed */
-  link('ZELYON',ZDATA.sites,0);
+  link('OW',OWDATA.cities,OWDATA.doors,1);
+  link('OW',OWDATA.huts,OWDATA.doors,0);
+  link('ZELYON',ZDATA.sites,ZDATA.doors,0);
   /* the landing pad, bottom-left of the green world */
   MAPS.ZELYON.warps.push({x:8,y:ZH-4,to:'INTEGRAL',tx:8,ty:11},{x:9,y:ZH-4,to:'INTEGRAL',tx:9,ty:11});
   MAPS.INTEGRAL.warps.push({x:8,y:12,to:'ZELYON',tx:8,ty:ZH-5,need:'PASSAGE',
@@ -3340,6 +3554,12 @@ function runEvent(ev,npc){
     npc.tk=["Go on, then. Do not make me regret it."];
     var extra=(p[1]==='TALES')?["Eight cottages are marked in the endpapers. None of them are on any ward map."]:[];
     say(["Obtained: "+ITEMS[p[1]].n+"."].concat(extra)); } }
+  else if(p[0]==='joinBear'){ partyAdd('BEAR'); npc.gone=1;
+    say(["Edward Bear joins the party.",HEROES.BEAR.bio],null,HEROES.BEAR.n,'BEAR'); }
+  else if(p[0]==='joinPuppet'){ partyAdd('PUPPET'); npc.gone=1;
+    say(["The Wooden Soldier joins the party.",HEROES.PUPPET.bio],null,HEROES.PUPPET.n,'PUPPET'); }
+  else if(p[0]==='joinAlice'){ partyAdd('ALICE'); npc.gone=1;
+    say(["Alice joins the party.",HEROES.ALICE.bio],null,HEROES.ALICE.n,'ALICE'); }
   else if(p[0]==='recruit'){
     var who={C1:'YEFIM',C2:'MARFA',C3:'OSIP',C4:'GRISHA'}[p[1]];
     if(who){ partyAdd(who); npc.gone=1;
@@ -3903,6 +4123,13 @@ function hurtHero(id,d){ var st=heroState(id); st.hp-=d; BT.shakeT=8;
   if(st.hp<=0){ st.hp=0; st.dead=1; } }
 function healHero(id,v){ var st=heroState(id); if(st.dead)return;
   st.hp=Math.min(stat(id,'hp'),st.hp+v); pop(heroCx(id),heroCy(id)-14,'+'+v,'#9aff9a'); }
+/* heals whatever it is handed: a hero id or a foe object */
+function healAny(who,v){
+  if(who==null) return;
+  if(typeof who==='string'){ healHero(who,v); return; }
+  if(who.dead) return;
+  who.hp=Math.min(who.max,who.hp+v); pop(foeCx(who),who.y+16,'+'+v,'#9aff9a');
+}
 
 /* ---- spawn the visual for a skill ---- */
 function spawnFx(sk,srcSide,tgt){
@@ -3935,12 +4162,17 @@ function useSkill(sk,src,isHero,targ){
     else hurtHero(targ,physDmg(fAtk(src),0,pw,1)); }
   else if(S.k==='aoe'){ if(isHero){ fs=livingFoes(); for(i=0;i<fs.length;i++) hurtFoe(fs[i],magDmg(hMag(src),fDef(fs[i]),pw*0.85)); }
     else { var hs=livingHeroes(); for(i=0;i<hs.length;i++) hurtHero(hs[i],magDmg(src.mag,hDef(hs[i]),pw*0.8)); } }
-  else if(S.k==='heal'){ healHero(targ,Math.round(pw+hMag(src)*1.4)); }
-  else if(S.k==='heals'){ healHero(src,Math.round(pw+hMag(src)*1.0)); }
-  else if(S.k==='healall'){ var hs2=livingHeroes(); for(i=0;i<hs2.length;i++) healHero(hs2[i],Math.round(pw+hMag(src)*1.1)); }
-  else if(S.k==='selfheal'){ src.hp=Math.min(src.max,src.hp+pw); pop(foeCx(src),src.y+16,'+'+pw,'#9aff9a'); }
-  else if(S.k==='revive'){ var st2=heroState(targ); if(st2.dead){ st2.dead=0; st2.hp=Math.round(stat(targ,'hp')*pw);
-      BT.msg=HEROES[targ].short+" is raised."; } else BT.msg=HEROES[targ].short+" has not fallen."; }
+  else if(S.k==='heal'){ healAny(targ,Math.round(pw+(isHero?hMag(src)*1.4:src.mag*1.4))); }
+  else if(S.k==='heals'){ healAny(src,Math.round(pw+(isHero?hMag(src):src.mag))); }
+  else if(S.k==='healall'){ var grp=isHero?livingHeroes():livingFoes();
+    for(i=0;i<grp.length;i++) healAny(grp[i],Math.round(pw+(isHero?hMag(src)*1.1:src.mag*1.1))); }
+  else if(S.k==='selfheal'){ healAny(src,pw); }
+  else if(S.k==='revive'){
+    if(!isHero || typeof targ!=='string'){ BT.msg=nm+" cannot raise that."; }
+    else { var st2=heroState(targ);
+      if(st2.dead){ st2.dead=0; st2.hp=Math.round(stat(targ,'hp')*pw);
+        BT.msg=HEROES[targ].short+" is raised."; }
+      else BT.msg=HEROES[targ].short+" has not fallen."; } }
   else if(S.k==='buff'){ var hs3=livingHeroes();
     for(i=0;i<hs3.length;i++){ var b3=heroState(hs3[i]).buff; b3[S.st]=bclamp(b3[S.st]+pw); }
     BT.msg=nm+" raises the party's "+(S.st==='atk'?'resolve':'guard')+"!"; }
@@ -3953,16 +4185,30 @@ function useSkill(sk,src,isHero,targ){
     else { var hs5=livingHeroes();
       for(i=0;i<hs5.length;i++){ var b5=heroState(hs5[i]).buff; b5[S.st]=bclamp(b5[S.st]-pw); } }
     BT.msg=nm+" saps the opposition!"; }
-  else if(S.k==='ascend'){ var sa=heroState(src);
-    if(sa.form){ BT.msg=nm+" is already transformed."; }
-    else { sa.form=1; BT.msg=nm+"'s hair turns pale blue. The air starts to move."; } }
-  else if(S.k==='rage'){ var sr=heroState(src);
-    if(sr.form===2){ BT.msg=nm+" is already past holding it in."; }
-    else { sr.form=2;
-      var heal=Math.round(stat(src,'hp')*0.4);
-      sr.hp=Math.min(stat(src,'hp'),sr.hp+heal);
-      pop(heroCx(src),heroCy(src)-14,'+'+heal,'#9aff9a');
-      BT.msg=nm+" stops holding it in. She comes up green, and bigger."; } }
+  else if(S.k==='mpall'){ var hs6=livingHeroes();
+    for(i=0;i<hs6.length;i++){ var sm=heroState(hs6[i]);
+      sm.mp=Math.min(stat(hs6[i],'mp'),sm.mp+pw);
+      pop(heroCx(hs6[i]),heroCy(hs6[i])-14,'+'+pw,'#9ad0ff'); }
+    BT.msg=nm+" hums, and everybody feels slightly better about it."; }
+  else if(S.k==='selfbuff'){ var sb=isHero?heroState(src):src;
+    sb.buff.atk=bclamp(sb.buff.atk+pw);
+    BT.msg=nm+" braces, and comes up harder."; }
+  else if(S.k==='ascend'){
+    if(!isHero){ src.buff.atk=bclamp(src.buff.atk+0.5); BT.msg=nm+" gathers itself."; }
+    else { var sa=heroState(src);
+      if(sa.form){ BT.msg=nm+" is already transformed."; }
+      else { sa.form=1; BT.msg=nm+"'s hair turns pale blue. The air starts to move."; } } }
+  else if(S.k==='rage'){
+    if(!isHero){ src.buff.atk=bclamp(src.buff.atk+0.7);
+      src.hp=Math.min(src.max,src.hp+Math.round(src.max*0.2));
+      BT.msg=nm+" swells up and stops being careful."; }
+    else { var sr=heroState(src);
+      if(sr.form===2){ BT.msg=nm+" is already past holding it in."; }
+      else { sr.form=2;
+        var heal=Math.round(stat(src,'hp')*0.4);
+        sr.hp=Math.min(stat(src,'hp'),sr.hp+heal);
+        pop(heroCx(src),heroCy(src)-14,'+'+heal,'#9aff9a');
+        BT.msg=nm+" stops holding it in. She comes up green, and bigger."; } } }
   else if(S.k==='drain'){
     if(isHero){ var dd=magDmg(hMag(src),fDef(targ),pw); hurtFoe(targ,dd);
       healHero(src,Math.round(dd*0.5)); BT.msg=nm+" draws the life out of "+targ.n+targ.tag+"!"; }
